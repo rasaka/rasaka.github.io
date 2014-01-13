@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Blog]]></title>
+  <link href="http://rasaka.github.io/atom.xml" rel="self"/>
+  <link href="http://rasaka.github.io/"/>
+  <updated>2014-01-13T19:05:42+09:00</updated>
+  <id>http://rasaka.github.io/</id>
+  <author>
+    <name><![CDATA[Ryota Asaka]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[NFS-mount-error]]></title>
+    <link href="http://rasaka.github.io/blog/nfs-mount-error/"/>
+    <updated>2014-01-13T19:01:58+09:00</updated>
+    <id>http://rasaka.github.io/blog/nfs-mount-error</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>
