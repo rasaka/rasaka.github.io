@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mac | 技ログ]]></title>
   <link href="http://blog.chacrue.com/categories/mac/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-14T22:25:05+09:00</updated>
+  <updated>2014-01-14T23:04:27+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -21,14 +21,13 @@
     <content type="html"><![CDATA[<p>ホストとの共有は <a href="http://mitchellh.com/comparing-filesystem-performance-in-virtual-machines">NFSの方がパフォーマンスが良い</a> らしいので、<br/>
 Vagrantfileで設定してみたところ、エラーが発生してNFSマウント出来ない。</p>
 
-<p><code>
-Mac$ vim Vagrantfile
+<p><code>bash
 config.vm.synced_folder "/Users/xxx/app/", "/app/", nfs: true
 </code></p>
 
 <p>下記エラーが発生。</p>
 
-<p>```
+<p>```bash
 Mac$ vagrant up
 [default] Exporting NFS shared folders&hellip;
 NFS is reporting that your exports file is invalid. Vagrant does
@@ -40,13 +39,13 @@ the issues below and execute &ldquo;vagrant reload&rdquo;:</p>
 
 <p>ホスト側で/etc/exportsを作成（空ファイルでよい）</p>
 
-<p><code>
+<p><code>bash
 Mac$ sudo touch /etc/exports
 </code></p>
 
 <p>NFSは起動していた。</p>
 
-<p><code>
+<p><code>bash
 Mac$ sudo nfsd status
 nfsd service is enabled
 nfsd is running (pid 3697, 8 threads)
@@ -54,13 +53,13 @@ nfsd is running (pid 3697, 8 threads)
 
 <p>起動していなかった場合は以下を実行。</p>
 
-<p><code>
+<p><code>bash
 Mac$ sudo nfsd enable
 </code></p>
 
 <p>別エラー発生。</p>
 
-<p>```
+<p>```bash
 Mac$ vagrant reload
 [default] Exporting NFS shared folders&hellip;
 Preparing to edit /etc/exports. Administrator privileges will be required&hellip;
@@ -80,7 +79,7 @@ Vagrant assumes that this means the command failed!</p>
 <p>sudo nfsd checkexports→vagrant reloadで解決<br/>
 <a href="https://github.com/mitchellh/vagrant/issues/1744">https://github.com/mitchellh/vagrant/issues/1744</a></p>
 
-<p><code>
+<p><code>bash
 Mac$ sudo nfsd checkexports
 Mac$ vagrant reload
 [default] Exporting NFS shared folders...
@@ -90,7 +89,7 @@ Preparing to edit /etc/exports. Administrator privileges will be required...
 
 <p>起動後、マウント出来ていることを確認。</p>
 
-<p><code>
+<p><code>bash
 vagrant$ df -h /app
 Filesystem                     Size  Used Avail Use% Mounted on
 192.168.33.1:/Users/xxx/app  466G   48G  417G  11% /app
@@ -98,7 +97,7 @@ Filesystem                     Size  Used Avail Use% Mounted on
 
 <h3>バージョン</h3>
 
-<p>```
+<p>```bash
 Mac$ vagrant &mdash;version
 Vagrant 1.4.1
 Mac$ sw_vers
