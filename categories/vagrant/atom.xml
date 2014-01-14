@@ -4,10 +4,10 @@
   <title><![CDATA[Category: Vagrant | Blog]]></title>
   <link href="http://blog.chacrue.com/categories/vagrant/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-14T19:11:46+09:00</updated>
+  <updated>2014-01-14T21:17:55+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
-    <name><![CDATA[R Asaka]]></name>
+    <name><![CDATA[R.Asaka]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -77,9 +77,8 @@ Vagrant assumes that this means the command failed!</p>
 <p>mount.nfs: access denied by server while mounting 192.168.33.1:/Users/xxx/app
 ```</p>
 
-<p>sudo nfsd checkexports→vagrant reloadで解決</p>
-
-<p><a href="https://github.com/mitchellh/vagrant/issues/1744">https://github.com/mitchellh/vagrant/issues/1744</a></p>
+<p>sudo nfsd checkexports→vagrant reloadで解決<br/>
+<a href="https://github.com/mitchellh/vagrant/issues/1744">https://github.com/mitchellh/vagrant/issues/1744</a></p>
 
 <p><code>
 Mac$ sudo nfsd checkexports
@@ -88,6 +87,8 @@ Mac$ vagrant reload
 Preparing to edit /etc/exports. Administrator privileges will be required...
 [default] Mounting NFS shared folders...
 </code></p>
+
+<p>起動後、マウント出来ていることを確認。</p>
 
 <p><code>
 vagrant$ df -h /app

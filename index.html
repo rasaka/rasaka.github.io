@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <title>Blog</title>
-  <meta name="author" content="R Asaka">
+  <meta name="author" content="R.Asaka">
 
   
   <meta name="description" content="ホストとの共有は NFSの方がパフォーマンスが良い らしいので、
@@ -33,11 +33,7 @@ config.vm.synced_folder "/Users/xxx/app/", "/app &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<script language="JavaScript">
-$(document).ready( function () {
-   $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
-})
-</script>
+
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -199,9 +195,8 @@ Vagrantfileで設定してみたところ、エラーが発生してNFSマウン
 </span><span class='line'>mount.nfs: access denied by server while mounting 192.168.33.1:/Users/xxx/app</span></code></pre></td></tr></table></div></figure>
 
 
-<p>sudo nfsd checkexports→vagrant reloadで解決</p>
-
-<p><a href="https://github.com/mitchellh/vagrant/issues/1744">https://github.com/mitchellh/vagrant/issues/1744</a></p>
+<p>sudo nfsd checkexports→vagrant reloadで解決<br/>
+<a href="https://github.com/mitchellh/vagrant/issues/1744">https://github.com/mitchellh/vagrant/issues/1744</a></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -215,7 +210,7 @@ Vagrantfileで設定してみたところ、エラーが発生してNFSマウン
 </span><span class='line'>[default] Mounting NFS shared folders...</span></code></pre></td></tr></table></div></figure>
 
 
-
+<p>起動後、マウント出来ていることを確認。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -294,8 +289,7 @@ Vagrantfileで設定してみたところ、エラーが発生してNFSマウン
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - R Asaka -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  Copyright &copy; 2014 - R.Asaka -
 </p>
 
 </footer>
@@ -303,7 +297,24 @@ Vagrantfileで設定してみたところ、エラーが発生してNFSマウン
 
 
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
 
 
 
