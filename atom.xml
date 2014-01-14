@@ -4,7 +4,7 @@
   <title><![CDATA[Blog]]></title>
   <link href="http://blog.chacrue.com/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-14T15:29:24+09:00</updated>
+  <updated>2014-01-14T15:51:14+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R Asaka]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[VagrantでNFSマウント出来ない]]></title>
-    <link href="http://blog.chacrue.com/nfs-mount-error/"/>
+    <link href="http://blog.chacrue.com/posts/2014/nfs-mount-error/"/>
     <updated>2014-01-13T19:01:58+09:00</updated>
-    <id>http://blog.chacrue.com/nfs-mount-error</id>
+    <id>http://blog.chacrue.com/posts/2014/nfs-mount-error</id>
     <content type="html"><![CDATA[<p>ホストとの共有は <a href="http://mitchellh.com/comparing-filesystem-performance-in-virtual-machines">NFSの方がパフォーマンスが良い</a> らしいので、<br/>
 Vagrantfileで設定してみたところ、エラーが発生してNFSマウント出来ない。</p>
 
