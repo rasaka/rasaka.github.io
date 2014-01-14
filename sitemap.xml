@@ -1,19 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://rasaka.github.io/nfs-mount-error/</loc>
+        <loc>http://blog.chacrue.com/nfs-mount-error/</loc>
         <lastmod>2014-01-14T01:21:22+09:00</lastmod>
     </url>
     <url>
-        <loc>http://rasaka.github.io/blog/archives/</loc>
+        <loc>http://blog.chacrue.com/blog/archives/</loc>
         <lastmod>2014-01-14T01:21:22+09:00</lastmod>
     </url>
     <url>
-        <loc>http://rasaka.github.io/</loc>
+        <loc>http://blog.chacrue.com/</loc>
         <lastmod>2014-01-14T01:21:22+09:00</lastmod>
     </url>
     <url>
-        <loc>http://rasaka.github.io/robots.txt</loc>
+        <loc>http://blog.chacrue.com/robots.txt</loc>
         <lastmod>2014-01-13T18:01:10+09:00</lastmod>
     </url>
 </urlset>
