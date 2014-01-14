@@ -4,7 +4,7 @@
   <title><![CDATA[技ログ]]></title>
   <link href="http://blog.chacrue.com/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-14T23:04:27+09:00</updated>
+  <updated>2014-01-14T23:07:06+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -22,7 +22,9 @@
 Vagrantfileで設定してみたところ、エラーが発生してNFSマウント出来ない。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>config.vm.synced_folder <span class="s2">&quot;/Users/xxx/app/&quot;</span>, <span class="s2">&quot;/app/&quot;</span>, nfs: <span class="nb">true</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vim Vagrantfile
+</span><span class='line'>config.vm.synced_folder <span class="s2">&quot;/Users/xxx/app/&quot;</span>, <span class="s2">&quot;/app/&quot;</span>, nfs: <span class="nb">true</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

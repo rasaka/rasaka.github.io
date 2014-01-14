@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mac | 技ログ]]></title>
   <link href="http://blog.chacrue.com/categories/mac/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-14T23:04:27+09:00</updated>
+  <updated>2014-01-14T23:07:06+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -22,6 +22,7 @@
 Vagrantfileで設定してみたところ、エラーが発生してNFSマウント出来ない。</p>
 
 <p><code>bash
+Mac$ vim Vagrantfile
 config.vm.synced_folder "/Users/xxx/app/", "/app/", nfs: true
 </code></p>
 

@@ -11,7 +11,9 @@
   
   <meta name="description" content="ホストとの共有は NFSの方がパフォーマンスが良い らしいので、
 Vagrantfileで設定してみたところ、エラーが発生してNFSマウント出来ない。 1
-config.vm.synced_folder &quot;/Users/xxx/app/&quot;, &quot;/app/&quot &hellip;">
+2
+Mac$ vim Vagrantfile
+config.vm.synced_folder &quot;/Users/xxx/app/& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -112,7 +114,9 @@ config.vm.synced_folder &quot;/Users/xxx/app/&quot;, &quot;/app/&quot &hellip;">
 Vagrantfileで設定してみたところ、エラーが発生してNFSマウント出来ない。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>config.vm.synced_folder <span class="s2">&quot;/Users/xxx/app/&quot;</span>, <span class="s2">&quot;/app/&quot;</span>, nfs: <span class="nb">true</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vim Vagrantfile
+</span><span class='line'>config.vm.synced_folder <span class="s2">&quot;/Users/xxx/app/&quot;</span>, <span class="s2">&quot;/app/&quot;</span>, nfs: <span class="nb">true</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
