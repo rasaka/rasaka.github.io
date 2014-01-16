@@ -4,7 +4,7 @@
   <title><![CDATA[技ログ]]></title>
   <link href="http://blog.chacrue.com/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-14T23:07:06+09:00</updated>
+  <updated>2014-01-17T01:52:13+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -12,6 +12,158 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Vagrant packageで複製したboxのSSHレスポンスが遅い]]></title>
+    <link href="http://blog.chacrue.com/posts/2014/slow-response-vagrant/"/>
+    <updated>2014-01-17T00:14:55+09:00</updated>
+    <id>http://blog.chacrue.com/posts/2014/slow-response-vagrant</id>
+    <content type="html"><![CDATA[<p>構築済みのVagrant boxをvagrant packageで複製し、
+IPだけ変更して起動したところ、eth1が起動しなかった。</p>
+
+<p>加えて、問題対処後に起動するも、SSHのレスポンスが遅かった。</p>
+
+<h3>box複製</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vagrant package
+</span><span class='line'>Mac<span class="nv">$ </span>vagrant box add copy_box package.box
+</span><span class='line'>Mac<span class="nv">$ </span>rm package.box
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>複製元のVagrantfileからIPだけ変更して起動。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gd">-  config.vm.network :private_network, ip: &quot;192.168.33.11&quot;</span>
+</span><span class='line'><span class="gi">+  config.vm.network :private_network, ip: &quot;192.168.33.12&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'>Mac$ vagrant up
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>eth1が起動しない</h3>
+
+<p>起動時にeth1が存在しないとのエラーが発生。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'>[default] Configuring and enabling network interfaces...
+</span><span class='line'>The following SSH command responded with a non-zero exit status.
+</span><span class='line'>Vagrant assumes that this means the command failed!
+</span><span class='line'>
+</span><span class='line'>ARPCHECK=no /sbin/ifup eth1 2&gt; /dev/null
+</span><span class='line'>
+</span><span class='line'>Stdout from the command:
+</span><span class='line'>
+</span><span class='line'>Device eth1 does not seem to be present, delaying initialization.
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>Stderr from the command:
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>下記を削除してからvagrant packageをやり直す。<br/>
+<a href="https://github.com/mitchellh/vagrant/issues/1777">https://github.com/mitchellh/vagrant/issues/1777</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Vagrant<span class="nv">$ </span>rm /etc/udev/rules.d/70-persistent-net.rules
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vagrant destroy
+</span><span class='line'>Mac<span class="nv">$ </span>vagrant package
+</span><span class='line'>Mac<span class="nv">$ </span>vagrant box remove copy_box
+</span><span class='line'>Mac<span class="nv">$ </span>vagrant box add copy_box package.box
+</span><span class='line'>Mac<span class="nv">$ </span>rm package.box
+</span><span class='line'>Mac<span class="nv">$ </span>vagrant up
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>eth1が起動出来た。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ifconfig eth1
+</span><span class='line'>eth1      Link encap:Ethernet  HWaddr 00:00:00:00:00:00
+</span><span class='line'>          inet addr:192.168.33.12  Bcast:192.168.33.255  Mask:255.255.255.0
+</span><span class='line'><span class="nv">$ </span>ping 192.168.33.1 -c 1
+</span><span class='line'>PING 192.168.33.1 <span class="o">(</span>192.168.33.1<span class="o">)</span> 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
+</span><span class='line'>64 bytes from 192.168.33.1: <span class="nv">icmp_seq</span><span class="o">=</span>1 <span class="nv">ttl</span><span class="o">=</span>64 <span class="nb">time</span><span class="o">=</span>0.179 ms
+</span><span class='line'>
+</span><span class='line'>--- 192.168.33.1 ping statistics ---
+</span><span class='line'>1 packets transmitted, 1 received, 0% packet loss, <span class="nb">time </span>0ms
+</span><span class='line'>rtt min/avg/max/mdev <span class="o">=</span> 0.179/0.179/0.179/0.000 ms
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>SSHレスポンスが遅い</h3>
+
+<p>ただし、SSHのレスポンスが遅い。キーを押下しても一瞬待ってから表示される。<br/>
+→google TOPへcurlしてみたが、通常と変わらない。<br/>
+→ネットワーク自体は遅くない</p>
+
+<p>Virtualboxで該当仮想マシンの設定を確認すると、下記のエラーが発生していた。</p>
+
+<p><img src="http://blog.chacrue.com/images/screenshots/virtualbox-error-1.png" alt="virtualbox-error-1" /></p>
+
+<p>→VagrantfileでI/O APIC有効化設定。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'>  config.vm.provider :virtualbox do |vb|
+</span><span class='line'>    vb.customize [&quot;modifyvm&quot;, :id, &quot;--memory&quot;, &quot;1024&quot;]
+</span><span class='line'>    vb.customize [&quot;modifyvm&quot;, :id, &quot;--cpus&quot;, 2]
+</span><span class='line'><span class="gi">+   vb.customize [&quot;modifyvm&quot;, :id, &quot;--ioapic&quot;, &quot;on&quot;]</span>
+</span><span class='line'>  end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant reloadで再起動→SSHのレスポンスが通常通りとなった。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vagrant reload
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[VagrantでNFSマウント出来ない]]></title>
@@ -130,7 +282,7 @@ Vagrantfileで設定してみたところ、エラーが発生してNFSマウン
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>vagrant<span class="nv">$ </span>df -h /app
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Vagrant<span class="nv">$ </span>df -h /app
 </span><span class='line'>Filesystem                     Size  Used Avail Use% Mounted on
 </span><span class='line'>192.168.33.1:/Users/xxx/app  466G   48G  417G  11% /app
 </span></code></pre></td></tr></table></div></figure>
@@ -154,7 +306,7 @@ Vagrantfileで設定してみたところ、エラーが発生してNFSマウン
 </span><span class='line'>ProductVersion: 10.9.1
 </span><span class='line'>BuildVersion: 13B3116
 </span><span class='line'>
-</span><span class='line'>vagrant<span class="nv">$ </span>cat /etc/redhat-release
+</span><span class='line'>Vagrant<span class="nv">$ </span>cat /etc/redhat-release
 </span><span class='line'>CentOS release 6.5 <span class="o">(</span>Final<span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 

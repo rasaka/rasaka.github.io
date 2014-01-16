@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Vagrant | 技ログ]]></title>
-  <link href="http://blog.chacrue.com/categories/vagrant/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Virtualbox | 技ログ]]></title>
+  <link href="http://blog.chacrue.com/categories/virtualbox/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
   <updated>2014-01-17T01:52:13+09:00</updated>
   <id>http://blog.chacrue.com/</id>
@@ -125,109 +125,6 @@ end
 <p><code>bash
 Mac$ vagrant reload
 </code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[VagrantでNFSマウント出来ない]]></title>
-    <link href="http://blog.chacrue.com/posts/2014/nfs-mount-error/"/>
-    <updated>2014-01-13T19:01:58+09:00</updated>
-    <id>http://blog.chacrue.com/posts/2014/nfs-mount-error</id>
-    <content type="html"><![CDATA[<p>ホストとの共有は <a href="http://mitchellh.com/comparing-filesystem-performance-in-virtual-machines">NFSの方がパフォーマンスが良い</a> らしいので、<br/>
-Vagrantfileで設定してみたところ、エラーが発生してNFSマウント出来ない。</p>
-
-<p><code>bash
-Mac$ vim Vagrantfile
-config.vm.synced_folder "/Users/xxx/app/", "/app/", nfs: true
-</code></p>
-
-<p>下記エラーが発生。</p>
-
-<p>```bash
-Mac$ vagrant up
-[default] Exporting NFS shared folders&hellip;
-NFS is reporting that your exports file is invalid. Vagrant does
-this check before making any changes to the file. Please correct
-the issues below and execute &ldquo;vagrant reload&rdquo;:</p>
-
-<p>Can&rsquo;t open /etc/exports
-```</p>
-
-<p>ホスト側で/etc/exportsを作成（空ファイルでよい）</p>
-
-<p><code>bash
-Mac$ sudo touch /etc/exports
-</code></p>
-
-<p>NFSは起動していた。</p>
-
-<p><code>bash
-Mac$ sudo nfsd status
-nfsd service is enabled
-nfsd is running (pid 3697, 8 threads)
-</code></p>
-
-<p>起動していなかった場合は以下を実行。</p>
-
-<p><code>bash
-Mac$ sudo nfsd enable
-</code></p>
-
-<p>別エラー発生。</p>
-
-<p>```bash
-Mac$ vagrant reload
-[default] Exporting NFS shared folders&hellip;
-Preparing to edit /etc/exports. Administrator privileges will be required&hellip;
-[default] Mounting NFS shared folders&hellip;
-The following SSH command responded with a non-zero exit status.
-Vagrant assumes that this means the command failed!</p>
-
-<p>mount -o &lsquo;vers=3,udp&rsquo; 192.168.33.1:&lsquo;/Users/xxx/app&rsquo; /app</p>
-
-<p>Stdout from the command:</p>
-
-<p>Stderr from the command:</p>
-
-<p>mount.nfs: access denied by server while mounting 192.168.33.1:/Users/xxx/app
-```</p>
-
-<p>sudo nfsd checkexports→vagrant reloadで解決<br/>
-<a href="https://github.com/mitchellh/vagrant/issues/1744">https://github.com/mitchellh/vagrant/issues/1744</a></p>
-
-<p><code>bash
-Mac$ sudo nfsd checkexports
-Mac$ vagrant reload
-[default] Exporting NFS shared folders...
-Preparing to edit /etc/exports. Administrator privileges will be required...
-[default] Mounting NFS shared folders...
-</code></p>
-
-<p>起動後、マウント出来ていることを確認。</p>
-
-<p><code>bash
-Vagrant$ df -h /app
-Filesystem                     Size  Used Avail Use% Mounted on
-192.168.33.1:/Users/xxx/app  466G   48G  417G  11% /app
-</code></p>
-
-<h3>バージョン</h3>
-
-<p>```bash
-Mac$ vagrant &mdash;version
-Vagrant 1.4.1
-Mac$ sw_vers
-ProductName:  Mac OS X
-ProductVersion: 10.9.1
-BuildVersion: 13B3116</p>
-
-<p>Vagrant$ cat /etc/redhat-release
-CentOS release 6.5 (Final)
-```</p>
-
-<h3>VagrantのBox</h3>
-
-<p><a href="https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box">https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box</a></p>
 ]]></content>
   </entry>
   

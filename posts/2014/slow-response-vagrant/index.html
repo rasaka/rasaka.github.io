@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>技ログ</title>
+  <title>Vagrant packageで複製したboxのSSHレスポンスが遅い - 技ログ</title>
   <meta name="author" content="R.Asaka">
 
   
@@ -23,7 +23,7 @@ Mac$ vagrant box &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.chacrue.com">
+  <link rel="canonical" href="http://blog.chacrue.com/posts/2014/slow-response-vagrant">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="技ログ" type="application/atom+xml">
@@ -80,15 +80,12 @@ Mac$ vagrant box &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h2 class="entry-title"><a href="/posts/2014/slow-response-vagrant/">Vagrant packageで複製したboxのSSHレスポンスが遅い</a></h2>
+      <h2 class="entry-title">Vagrant packageで複製したboxのSSHレスポンスが遅い</h2>
     
     
       <p class="meta">
@@ -111,7 +108,7 @@ Mac$ vagrant box &hellip;">
   </header>
 
 
-  <div class="entry-content"><p>構築済みのVagrant boxをvagrant packageで複製し、
+<div class="entry-content"><p>構築済みのVagrant boxをvagrant packageで複製し、
 IPだけ変更して起動したところ、eth1が起動しなかった。</p>
 
 <p>加えて、問題対処後に起動するも、SSHのレスポンスが遅かった。</p>
@@ -256,22 +253,16 @@ IPだけ変更して起動したところ、eth1が起動しなかった。</p>
 </span></code></pre></td></tr></table></div></figure>
 
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h2 class="entry-title"><a href="/posts/2014/nfs-mount-error/">VagrantでNFSマウント出来ない</a></h2>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">R.Asaka</span></span>
+
+      
 
 
 
@@ -283,170 +274,42 @@ IPだけ変更して起動したところ、eth1が起動しなかった。</p>
   
 
 
-<time datetime="2014-01-13T19:01:58+09:00" pubdate data-updated="true">2014/01/13</time>
-        
-      </p>
+<time datetime="2014-01-17T00:14:55+09:00" pubdate data-updated="true">2014/01/17</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/vagrant/'>Vagrant</a>, <a class='category' href='/categories/virtualbox/'>Virtualbox</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>ホストとの共有は <a href="http://mitchellh.com/comparing-filesystem-performance-in-virtual-machines">NFSの方がパフォーマンスが良い</a> らしいので、<br/>
-Vagrantfileで設定してみたところ、エラーが発生してNFSマウント出来ない。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vim Vagrantfile
-</span><span class='line'>config.vm.synced_folder <span class="s2">&quot;/Users/xxx/app/&quot;</span>, <span class="s2">&quot;/app/&quot;</span>, nfs: <span class="nb">true</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>下記エラーが発生。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vagrant up
-</span><span class='line'><span class="o">[</span>default<span class="o">]</span> Exporting NFS shared folders...
-</span><span class='line'>NFS is reporting that your exports file is invalid. Vagrant does
-</span><span class='line'>this check before making any changes to the file. Please correct
-</span><span class='line'>the issues below and execute <span class="s2">&quot;vagrant reload&quot;</span>:
-</span><span class='line'>
-</span><span class='line'>Can<span class="err">&#39;</span>t open /etc/exports
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ホスト側で/etc/exportsを作成（空ファイルでよい）</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>sudo touch /etc/exports
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>NFSは起動していた。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>sudo nfsd status
-</span><span class='line'>nfsd service is enabled
-</span><span class='line'>nfsd is running <span class="o">(</span>pid 3697, 8 threads<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>起動していなかった場合は以下を実行。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>sudo nfsd <span class="nb">enable</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>別エラー発生。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vagrant reload
-</span><span class='line'><span class="o">[</span>default<span class="o">]</span> Exporting NFS shared folders...
-</span><span class='line'>Preparing to edit /etc/exports. Administrator privileges will be required...
-</span><span class='line'><span class="o">[</span>default<span class="o">]</span> Mounting NFS shared folders...
-</span><span class='line'>The following SSH <span class="nb">command </span>responded with a non-zero <span class="nb">exit </span>status.
-</span><span class='line'>Vagrant assumes that this means the <span class="nb">command </span>failed!
-</span><span class='line'>
-</span><span class='line'>mount -o <span class="s1">&#39;vers=3,udp&#39;</span> 192.168.33.1:<span class="s1">&#39;/Users/xxx/app&#39;</span> /app
-</span><span class='line'>
-</span><span class='line'>Stdout from the <span class="nb">command</span>:
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>Stderr from the <span class="nb">command</span>:
-</span><span class='line'>
-</span><span class='line'>mount.nfs: access denied by server <span class="k">while </span>mounting 192.168.33.1:/Users/xxx/app
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>sudo nfsd checkexports→vagrant reloadで解決<br/>
-<a href="https://github.com/mitchellh/vagrant/issues/1744">https://github.com/mitchellh/vagrant/issues/1744</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>sudo nfsd checkexports
-</span><span class='line'>Mac<span class="nv">$ </span>vagrant reload
-</span><span class='line'><span class="o">[</span>default<span class="o">]</span> Exporting NFS shared folders...
-</span><span class='line'>Preparing to edit /etc/exports. Administrator privileges will be required...
-</span><span class='line'><span class="o">[</span>default<span class="o">]</span> Mounting NFS shared folders...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>起動後、マウント出来ていることを確認。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Vagrant<span class="nv">$ </span>df -h /app
-</span><span class='line'>Filesystem                     Size  Used Avail Use% Mounted on
-</span><span class='line'>192.168.33.1:/Users/xxx/app  466G   48G  417G  11% /app
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>バージョン</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vagrant --version
-</span><span class='line'>Vagrant 1.4.1
-</span><span class='line'>Mac<span class="nv">$ </span>sw_vers
-</span><span class='line'>ProductName:  Mac OS X
-</span><span class='line'>ProductVersion: 10.9.1
-</span><span class='line'>BuildVersion: 13B3116
-</span><span class='line'>
-</span><span class='line'>Vagrant<span class="nv">$ </span>cat /etc/redhat-release
-</span><span class='line'>CentOS release 6.5 <span class="o">(</span>Final<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>VagrantのBox</h3>
-
-<p><a href="https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box">https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box</a></p>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/slow-response-vagrant/" data-via="" data-counturl="http://blog.chacrue.com/posts/2014/slow-response-vagrant/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/2014/nfs-mount-error/" title="Previous Post: VagrantでNFSマウント出来ない">&laquo; VagrantでNFSマウント出来ない</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
 <aside class="sidebar">
   
     <section>
@@ -478,6 +341,7 @@ Vagrantfileで設定してみたところ、エラーが発生してNFSマウン
 
   
 </aside>
+
 
     </div>
   </div>
