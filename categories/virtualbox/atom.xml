@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Virtualbox | 技ログ]]></title>
   <link href="http://blog.chacrue.com/categories/virtualbox/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-17T02:08:34+09:00</updated>
+  <updated>2014-01-17T02:16:12+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -102,7 +102,7 @@ rtt min/avg/max/mdev = 0.179/0.179/0.179/0.000 ms
 
 <p>Virtualboxで該当仮想マシンの設定を確認すると、下記のエラーが発生していた。</p>
 
-<p><img src="http://blog.chacrue.com/images/screenshots/virtualbox-error-1.png" alt="virtualbox-error-1" /></p>
+<p><img src="/images/screenshots/virtualbox-error-1.png" alt="virtualbox-error-1" /></p>
 
 <p>→VagrantfileでI/O APIC有効化設定。</p>
 
