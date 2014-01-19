@@ -5,16 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="ja"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Vagrant packageで複製したboxのSSHレスポンスが遅い - 技ログ</title>
+  <title>Octopressで日本語の記事が書けない - 技ログ</title>
   <meta name="author" content="R.Asaka">
 
   
-  <meta name="description" content="構築済みのVagrant boxをvagrant packageで複製し、
-IPだけ変更して起動したところ、eth1が起動しなかった。 加えて、問題対処後に起動するも、SSHのレスポンスが遅かった。 box複製 1
-2
-3
-Mac$ vagrant package
-Mac$ vagrant box &hellip;">
+  <meta name="description" content="Octopressで一つ記事を書いたので、
+試しにアップしようとしたところ、以下のエラーが出てgenerate出来ない。 ※OSはCentOS 6.5で必要最小限のパッケージしか入れていない。
+https://github.com/2creatives/vagrant-centos/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,7 +20,7 @@ Mac$ vagrant box &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.chacrue.com/posts/2014/slow-response-vagrant/">
+  <link rel="canonical" href="http://blog.chacrue.com/posts/2014/octopress-japanese-post/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="技ログ" type="application/atom+xml">
@@ -85,10 +82,10 @@ Mac$ vagrant box &hellip;">
   
   <header>
     
-      <h2 class="entry-title">Vagrant packageで複製したboxのSSHレスポンスが遅い</h2>
+      <h2 class="entry-title">Octopressで日本語の記事が書けない</h2>
     <div class="sharing">
   
-    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/slow-response-vagrant/" data-via="narvaux" data-counturl="http://blog.chacrue.com/posts/2014/slow-response-vagrant/">Tweet</a>
+    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/octopress-japanese-post/" data-via="narvaux" data-counturl="http://blog.chacrue.com/posts/2014/octopress-japanese-post/">Tweet</a>
                               <!-- Google+1 -->
                               <!-- <div class="sns_gp"><div class="g-plusone" data-size="medium" data-count="true" href="http://wired.jp/2014/01/18/the-great-coder-vol10/">&nbsp;</div></div> -->
                               <!-- Hatena -->
@@ -96,15 +93,15 @@ Mac$ vagrant box &hellip;">
                             
   
   
-    <div class="g-plusone" data-size="midium" data-count="true" href="http://blog.chacrue.com/posts/2014/slow-response-vagrant/"> </div>
+    <div class="g-plusone" data-size="midium" data-count="true" href="http://blog.chacrue.com/posts/2014/octopress-japanese-post/"> </div>
   
   
-    <div class="fb-like" data-href="http://blog.chacrue.com/posts/2014/slow-response-vagrant/" data-send="false" data-width="75" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+    <div class="fb-like" data-href="http://blog.chacrue.com/posts/2014/octopress-japanese-post/" data-send="false" data-width="75" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
   
   
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="http://b.hatena.ne.jp/entry/http://blog.chacrue.com/posts/2014/slow-response-vagrant/" class="hatena-bookmark-button"
-          data-hatena-bookmark-title="vagrant packageで複製したboxのSSHレスポンスが遅い"
+    <a href="http://b.hatena.ne.jp/entry/http://blog.chacrue.com/posts/2014/octopress-japanese-post/" class="hatena-bookmark-button"
+          data-hatena-bookmark-title="Octopressで日本語の記事が書けない"
           data-hatena-bookmark-layout="simple-balloon"
           title="このエントリーをはてなブックマークに追加">
         <img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
@@ -131,48 +128,18 @@ Mac$ vagrant box &hellip;">
   
 
 
-<time datetime="2014-01-17T00:14:55+09:00" pubdate data-updated="true">2014/01/17</time>
+<time datetime="2014-01-19T18:56:15+09:00" pubdate data-updated="true">2014/01/19</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>構築済みのVagrant boxをvagrant packageで複製し、
-IPだけ変更して起動したところ、eth1が起動しなかった。</p>
+<div class="entry-content"><p>Octopressで一つ記事を書いたので、
+試しにアップしようとしたところ、以下のエラーが出てgenerate出来ない。</p>
 
-<p>加えて、問題対処後に起動するも、SSHのレスポンスが遅かった。</p>
-
-<h3>box複製</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vagrant package
-</span><span class='line'>Mac<span class="nv">$ </span>vagrant box add copy_box package.box
-</span><span class='line'>Mac<span class="nv">$ </span>rm package.box
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>複製元のVagrantfileからIPだけ変更して起動。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gd">-  config.vm.network :private_network, ip: &quot;192.168.33.11&quot;</span>
-</span><span class='line'><span class="gi">+  config.vm.network :private_network, ip: &quot;192.168.33.12&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='diff'><span class='line'>Mac$ vagrant up
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>eth1が起動しない</h3>
-
-<p>起動時にeth1が存在しないとのエラーが発生。</p>
+<p>※OSはCentOS 6.5で必要最小限のパッケージしか入れていない。<br/>
+<a href="https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box">https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box</a></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -186,47 +153,44 @@ IPだけ変更して起動したところ、eth1が起動しなかった。</p>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='diff'><span class='line'>[default] Configuring and enabling network interfaces...
-</span><span class='line'>The following SSH command responded with a non-zero exit status.
-</span><span class='line'>Vagrant assumes that this means the command failed!
-</span><span class='line'>
-</span><span class='line'>ARPCHECK=no /sbin/ifup eth1 2&gt; /dev/null
-</span><span class='line'>
-</span><span class='line'>Stdout from the command:
-</span><span class='line'>
-</span><span class='line'>Device eth1 does not seem to be present, delaying initialization.
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>Stderr from the command:
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake generate
+</span><span class='line'><span class="c">## Generating Site with Jekyll</span>
+</span><span class='line'>identical <span class="nb">source</span>/stylesheets/screen.css
+</span><span class='line'>---
+</span><span class='line'>Configuration from /app/rails_projects/blog/rasaka.github.io/_config.yml
+</span><span class='line'>Building site: <span class="nb">source</span> -&gt; public
+</span><span class='line'>YAML Exception reading 2014-01-13-nfs-mount-error.markdown: invalid byte sequence in US-ASCII
+</span><span class='line'>/app/rails_projects/blog/rasaka.github.io/plugins/backtick_code_block.rb:13:in <span class="sb">`</span>gsub<span class="s1">&#39;: invalid byte sequence in US-ASCII (ArgumentError)</span>
+</span><span class='line'><span class="s1">  from /app/rails_projects/blog/rasaka.github.io/plugins/backtick_code_block.rb:13:in `render_code_block&#39;</span>
+</span><span class='line'>  from /app/rails_projects/blog/rasaka.github.io/plugins/octopress_filters.rb:12:in <span class="sb">`</span>pre_filter<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /app/rails_projects/blog/rasaka.github.io/plugins/octopress_filters.rb:28:in `pre_render&#39;</span>
+</span><span class='line'>  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:112:in <span class="sb">`</span>block in pre_render<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:111:in `each&#39;</span>
+</span><span class='line'>  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:111:in <span class="sb">`</span>pre_render<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:166:in `do_layout&#39;</span>
+</span><span class='line'>  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/post.rb:195:in <span class="sb">`</span>render<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:200:in `block in render&#39;</span>
+</span><span class='line'>  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:199:in <span class="sb">`</span>each<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:199:in `render&#39;</span>
+</span><span class='line'>  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:41:in <span class="sb">`</span>process<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/bin/jekyll:264:in `&lt;top (required)&gt;&#39;</span>
+</span><span class='line'>  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/bin/jekyll:23:in <span class="sb">`</span>load<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/bin/jekyll:23:in `&lt;main&gt;&#39;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>下記を削除してからvagrant packageをやり直す。<br/>
-<a href="https://github.com/mitchellh/vagrant/issues/1777">https://github.com/mitchellh/vagrant/issues/1777</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Vagrant<span class="nv">$ </span>rm /etc/udev/rules.d/70-persistent-net.rules
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vagrant destroy
-</span><span class='line'>Mac<span class="nv">$ </span>vagrant package
-</span><span class='line'>Mac<span class="nv">$ </span>vagrant box remove copy_box
-</span><span class='line'>Mac<span class="nv">$ </span>vagrant box add copy_box package.box
-</span><span class='line'>Mac<span class="nv">$ </span>rm package.box
-</span><span class='line'>Mac<span class="nv">$ </span>vagrant up
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>eth1が起動出来た。</p>
+<p>現状のロケールを確認。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -238,48 +202,87 @@ IPだけ変更して起動したところ、eth1が起動しなかった。</p>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ifconfig eth1
-</span><span class='line'>eth1      Link encap:Ethernet  HWaddr 00:00:00:00:00:00
-</span><span class='line'>          inet addr:192.168.33.12  Bcast:192.168.33.255  Mask:255.255.255.0
-</span><span class='line'><span class="nv">$ </span>ping 192.168.33.1 -c 1
-</span><span class='line'>PING 192.168.33.1 <span class="o">(</span>192.168.33.1<span class="o">)</span> 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
-</span><span class='line'>64 bytes from 192.168.33.1: <span class="nv">icmp_seq</span><span class="o">=</span>1 <span class="nv">ttl</span><span class="o">=</span>64 <span class="nb">time</span><span class="o">=</span>0.179 ms
-</span><span class='line'>
-</span><span class='line'>--- 192.168.33.1 ping statistics ---
-</span><span class='line'>1 packets transmitted, 1 received, 0% packet loss, <span class="nb">time </span>0ms
-</span><span class='line'>rtt min/avg/max/mdev <span class="o">=</span> 0.179/0.179/0.179/0.000 ms
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>locale -a
+</span><span class='line'>locale: Cannot <span class="nb">set </span>LC_CTYPE to default locale: No such file or directory
+</span><span class='line'>locale: Cannot <span class="nb">set </span>LC_MESSAGES to default locale: No such file or directory
+</span><span class='line'>locale: Cannot <span class="nb">set </span>LC_COLLATE to default locale: No such file or directory
+</span><span class='line'>C
+</span><span class='line'>POSIX
+</span><span class='line'>en_US
+</span><span class='line'>en_US.iso88591
+</span><span class='line'>en_US.iso885915
+</span><span class='line'>en_US.utf8
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>SSHレスポンスが遅い</h3>
-
-<p>ただし、SSHのレスポンスが遅い。キーを押下しても一瞬待ってから表示される。<br/>
-→google TOPへcurlしてみたが、通常と変わらない。<br/>
-→ネットワーク自体は遅くない</p>
-
-<p>Virtualboxで該当仮想マシンの設定を確認すると、下記のエラーが発生していた。</p>
-
-<p><img src="/images/screenshots/virtualbox-error-1.png" alt="virtualbox-error-1" /></p>
-
-<p>→VagrantfileでI/O APIC有効化設定。</p>
+<p>ja_JP.utf8を利用出来るようにする。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='diff'><span class='line'>  config.vm.provider :virtualbox do |vb|
-</span><span class='line'>    vb.customize [&quot;modifyvm&quot;, :id, &quot;--memory&quot;, &quot;1024&quot;]
-</span><span class='line'>    vb.customize [&quot;modifyvm&quot;, :id, &quot;--cpus&quot;, 2]
-</span><span class='line'><span class="gi">+   vb.customize [&quot;modifyvm&quot;, :id, &quot;--ioapic&quot;, &quot;on&quot;]</span>
-</span><span class='line'>  end
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo localedef -f UTF-8 -i ja_JP ja_JP.utf8
+</span><span class='line'><span class="nv">$ </span>locale -a
+</span><span class='line'>C
+</span><span class='line'>POSIX
+</span><span class='line'>en_US
+</span><span class='line'>en_US.iso88591
+</span><span class='line'>en_US.iso885915
+</span><span class='line'>en_US.utf8
+</span><span class='line'>ja_JP.utf8
+</span><span class='line'><span class="nv">$ </span>locale
+</span><span class='line'><span class="nv">LANG</span><span class="o">=</span>ja_JP.utf8
+</span><span class='line'><span class="nv">LC_CTYPE</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_NUMERIC</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_TIME</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_COLLATE</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_MONETARY</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_MESSAGES</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_PAPER</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_NAME</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_ADDRESS</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_TELEPHONE</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_MEASUREMENT</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_IDENTIFICATION</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_ALL</span><span class="o">=</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>vagrant reloadで再起動→SSHのレスポンスが通常通りとなった。</p>
+<p>/etc/sysconfig/i18nを修正。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vagrant reload
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'>$ vim /etc/sysconfig/i18n
+</span><span class='line'><span class="gd">-LANG=&quot;en_US.UTF-8&quot;</span>
+</span><span class='line'><span class="gi">+LANG=&quot;ja_JP.utf8&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/etc/sysconfig/i18nを再読み込みで解決。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>. /etc/sysconfig/i18n
 </span></code></pre></td></tr></table></div></figure>
 
 </div>
@@ -304,12 +307,12 @@ IPだけ変更して起動したところ、eth1が起動しなかった。</p>
   
 
 
-<time datetime="2014-01-17T00:14:55+09:00" pubdate data-updated="true">2014/01/17</time>
+<time datetime="2014-01-19T18:56:15+09:00" pubdate data-updated="true">2014/01/19</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/vagrant/'>Vagrant</a>, <a class='category' href='/categories/virtualbox/'>Virtualbox</a>
+    <a class='category' href='/categories/centos/'>CentOS</a>, <a class='category' href='/categories/octopress/'>Octopress</a>
   
 </span>
 
@@ -318,7 +321,7 @@ IPだけ変更して起動したところ、eth1が起動しなかった。</p>
     
       <div class="sharing">
   
-    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/slow-response-vagrant/" data-via="narvaux" data-counturl="http://blog.chacrue.com/posts/2014/slow-response-vagrant/">Tweet</a>
+    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/octopress-japanese-post/" data-via="narvaux" data-counturl="http://blog.chacrue.com/posts/2014/octopress-japanese-post/">Tweet</a>
                               <!-- Google+1 -->
                               <!-- <div class="sns_gp"><div class="g-plusone" data-size="medium" data-count="true" href="http://wired.jp/2014/01/18/the-great-coder-vol10/">&nbsp;</div></div> -->
                               <!-- Hatena -->
@@ -326,15 +329,15 @@ IPだけ変更して起動したところ、eth1が起動しなかった。</p>
                             
   
   
-    <div class="g-plusone" data-size="midium" data-count="true" href="http://blog.chacrue.com/posts/2014/slow-response-vagrant/"> </div>
+    <div class="g-plusone" data-size="midium" data-count="true" href="http://blog.chacrue.com/posts/2014/octopress-japanese-post/"> </div>
   
   
-    <div class="fb-like" data-href="http://blog.chacrue.com/posts/2014/slow-response-vagrant/" data-send="false" data-width="75" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+    <div class="fb-like" data-href="http://blog.chacrue.com/posts/2014/octopress-japanese-post/" data-send="false" data-width="75" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
   
   
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="http://b.hatena.ne.jp/entry/http://blog.chacrue.com/posts/2014/slow-response-vagrant/" class="hatena-bookmark-button"
-          data-hatena-bookmark-title="vagrant packageで複製したboxのSSHレスポンスが遅い"
+    <a href="http://b.hatena.ne.jp/entry/http://blog.chacrue.com/posts/2014/octopress-japanese-post/" class="hatena-bookmark-button"
+          data-hatena-bookmark-title="Octopressで日本語の記事が書けない"
           data-hatena-bookmark-layout="simple-balloon"
           title="このエントリーをはてなブックマークに追加">
         <img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
@@ -349,10 +352,8 @@ IPだけ変更して起動したところ、eth1が起動しなかった。</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/posts/2014/nfs-mount-error/" title="Previous Post: VagrantでNFSマウント出来ない">&laquo; VagrantでNFSマウント出来ない</a>
+        <a class="basic-alignment left" href="/posts/2014/slow-response-vagrant/" title="Previous Post: vagrant packageで複製したboxのSSHレスポンスが遅い">&laquo; vagrant packageで複製したboxのSSHレスポンスが遅い</a>
       
-      
-        <a class="basic-alignment right" href="/posts/2014/octopress-japanese-post/" title="Next Post: Octopressで日本語の記事が書けない">Octopressで日本語の記事が書けない &raquo;</a>
       
     </p>
   </footer>

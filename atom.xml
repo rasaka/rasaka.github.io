@@ -4,7 +4,7 @@
   <title><![CDATA[技ログ]]></title>
   <link href="http://blog.chacrue.com/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-19T18:33:38+09:00</updated>
+  <updated>2014-01-19T20:10:23+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -12,6 +12,164 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopressで日本語の記事が書けない]]></title>
+    <link href="http://blog.chacrue.com/posts/2014/octopress-japanese-post/"/>
+    <updated>2014-01-19T18:56:15+09:00</updated>
+    <id>http://blog.chacrue.com/posts/2014/octopress-japanese-post</id>
+    <content type="html"><![CDATA[<p>Octopressで一つ記事を書いたので、
+試しにアップしようとしたところ、以下のエラーが出てgenerate出来ない。</p>
+
+<p>※OSはCentOS 6.5で必要最小限のパッケージしか入れていない。<br/>
+<a href="https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box">https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake generate
+</span><span class='line'><span class="c">## Generating Site with Jekyll</span>
+</span><span class='line'>identical <span class="nb">source</span>/stylesheets/screen.css
+</span><span class='line'>---
+</span><span class='line'>Configuration from /app/rails_projects/blog/rasaka.github.io/_config.yml
+</span><span class='line'>Building site: <span class="nb">source</span> -&gt; public
+</span><span class='line'>YAML Exception reading 2014-01-13-nfs-mount-error.markdown: invalid byte sequence in US-ASCII
+</span><span class='line'>/app/rails_projects/blog/rasaka.github.io/plugins/backtick_code_block.rb:13:in <span class="sb">`</span>gsub<span class="s1">&#39;: invalid byte sequence in US-ASCII (ArgumentError)</span>
+</span><span class='line'><span class="s1">  from /app/rails_projects/blog/rasaka.github.io/plugins/backtick_code_block.rb:13:in `render_code_block&#39;</span>
+</span><span class='line'>  from /app/rails_projects/blog/rasaka.github.io/plugins/octopress_filters.rb:12:in <span class="sb">`</span>pre_filter<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /app/rails_projects/blog/rasaka.github.io/plugins/octopress_filters.rb:28:in `pre_render&#39;</span>
+</span><span class='line'>  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:112:in <span class="sb">`</span>block in pre_render<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:111:in `each&#39;</span>
+</span><span class='line'>  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:111:in <span class="sb">`</span>pre_render<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:166:in `do_layout&#39;</span>
+</span><span class='line'>  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/post.rb:195:in <span class="sb">`</span>render<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:200:in `block in render&#39;</span>
+</span><span class='line'>  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:199:in <span class="sb">`</span>each<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:199:in `render&#39;</span>
+</span><span class='line'>  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:41:in <span class="sb">`</span>process<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/bin/jekyll:264:in `&lt;top (required)&gt;&#39;</span>
+</span><span class='line'>  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/bin/jekyll:23:in <span class="sb">`</span>load<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/bin/jekyll:23:in `&lt;main&gt;&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>現状のロケールを確認。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>locale -a
+</span><span class='line'>locale: Cannot <span class="nb">set </span>LC_CTYPE to default locale: No such file or directory
+</span><span class='line'>locale: Cannot <span class="nb">set </span>LC_MESSAGES to default locale: No such file or directory
+</span><span class='line'>locale: Cannot <span class="nb">set </span>LC_COLLATE to default locale: No such file or directory
+</span><span class='line'>C
+</span><span class='line'>POSIX
+</span><span class='line'>en_US
+</span><span class='line'>en_US.iso88591
+</span><span class='line'>en_US.iso885915
+</span><span class='line'>en_US.utf8
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ja_JP.utf8を利用出来るようにする。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo localedef -f UTF-8 -i ja_JP ja_JP.utf8
+</span><span class='line'><span class="nv">$ </span>locale -a
+</span><span class='line'>C
+</span><span class='line'>POSIX
+</span><span class='line'>en_US
+</span><span class='line'>en_US.iso88591
+</span><span class='line'>en_US.iso885915
+</span><span class='line'>en_US.utf8
+</span><span class='line'>ja_JP.utf8
+</span><span class='line'><span class="nv">$ </span>locale
+</span><span class='line'><span class="nv">LANG</span><span class="o">=</span>ja_JP.utf8
+</span><span class='line'><span class="nv">LC_CTYPE</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_NUMERIC</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_TIME</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_COLLATE</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_MONETARY</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_MESSAGES</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_PAPER</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_NAME</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_ADDRESS</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_TELEPHONE</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_MEASUREMENT</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_IDENTIFICATION</span><span class="o">=</span><span class="s2">&quot;ja_JP.utf8&quot;</span>
+</span><span class='line'><span class="nv">LC_ALL</span><span class="o">=</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/etc/sysconfig/i18nを修正。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'>$ vim /etc/sysconfig/i18n
+</span><span class='line'><span class="gd">-LANG=&quot;en_US.UTF-8&quot;</span>
+</span><span class='line'><span class="gi">+LANG=&quot;ja_JP.utf8&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/etc/sysconfig/i18nを再読み込みで解決。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>. /etc/sysconfig/i18n
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Vagrant packageで複製したboxのSSHレスポンスが遅い]]></title>

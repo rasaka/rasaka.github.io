@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: CentOS | 技ログ]]></title>
+  <link href="http://blog.chacrue.com/categories/centos/atom.xml" rel="self"/>
+  <link href="http://blog.chacrue.com/"/>
+  <updated>2014-01-19T20:10:23+09:00</updated>
+  <id>http://blog.chacrue.com/</id>
+  <author>
+    <name><![CDATA[R.Asaka]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Octopressで日本語の記事が書けない]]></title>
+    <link href="http://blog.chacrue.com/posts/2014/octopress-japanese-post/"/>
+    <updated>2014-01-19T18:56:15+09:00</updated>
+    <id>http://blog.chacrue.com/posts/2014/octopress-japanese-post</id>
+    <content type="html"><![CDATA[<p>Octopressで一つ記事を書いたので、
+試しにアップしようとしたところ、以下のエラーが出てgenerate出来ない。</p>
+
+<p>※OSはCentOS 6.5で必要最小限のパッケージしか入れていない。<br/>
+<a href="https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box">https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box</a></p>
+
+<p>```bash
+$ bundle exec rake generate</p>
+
+<h2>Generating Site with Jekyll</h2>
+
+<h2>identical source/stylesheets/screen.css</h2>
+
+<p>Configuration from /app/rails_projects/blog/rasaka.github.io/_config.yml
+Building site: source &ndash;> public
+YAML Exception reading 2014-01-13-nfs-mount-error.markdown: invalid byte sequence in US-ASCII
+/app/rails_projects/blog/rasaka.github.io/plugins/backtick_code_block.rb:13:in <code>gsub': invalid byte sequence in US-ASCII (ArgumentError)
+  from /app/rails_projects/blog/rasaka.github.io/plugins/backtick_code_block.rb:13:in</code>render_code_block'
+  from /app/rails_projects/blog/rasaka.github.io/plugins/octopress_filters.rb:12:in <code>pre_filter'
+  from /app/rails_projects/blog/rasaka.github.io/plugins/octopress_filters.rb:28:in</code>pre_render'
+  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:112:in <code>block in pre_render'
+  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:111:in</code>each'
+  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:111:in <code>pre_render'
+  from /app/rails_projects/blog/rasaka.github.io/plugins/post_filters.rb:166:in</code>do_layout'
+  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/post.rb:195:in <code>render'
+  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:200:in</code>block in render'
+  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:199:in <code>each'
+  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:199:in</code>render'
+  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/lib/jekyll/site.rb:41:in <code>process'
+  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/gems/jekyll-0.12.1/bin/jekyll:264:in</code><top (required)>&lsquo;
+  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/bin/jekyll:23:in <code>load'
+  from /home/vagrant/.rbenv/versions/2.1.0/gemsets/blog-octopress/bin/jekyll:23:in</code><main>&rsquo;
+```</p>
+
+<p>現状のロケールを確認。</p>
+
+<p><code>bash
+$ locale -a
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_COLLATE to default locale: No such file or directory
+C
+POSIX
+en_US
+en_US.iso88591
+en_US.iso885915
+en_US.utf8
+</code></p>
+
+<p>ja_JP.utf8を利用出来るようにする。</p>
+
+<p><code>bash
+$ sudo localedef -f UTF-8 -i ja_JP ja_JP.utf8
+$ locale -a
+C
+POSIX
+en_US
+en_US.iso88591
+en_US.iso885915
+en_US.utf8
+ja_JP.utf8
+$ locale
+LANG=ja_JP.utf8
+LC_CTYPE="ja_JP.utf8"
+LC_NUMERIC="ja_JP.utf8"
+LC_TIME="ja_JP.utf8"
+LC_COLLATE="ja_JP.utf8"
+LC_MONETARY="ja_JP.utf8"
+LC_MESSAGES="ja_JP.utf8"
+LC_PAPER="ja_JP.utf8"
+LC_NAME="ja_JP.utf8"
+LC_ADDRESS="ja_JP.utf8"
+LC_TELEPHONE="ja_JP.utf8"
+LC_MEASUREMENT="ja_JP.utf8"
+LC_IDENTIFICATION="ja_JP.utf8"
+LC_ALL=
+</code></p>
+
+<p>/etc/sysconfig/i18nを修正。</p>
+
+<p><code>diff
+$ vim /etc/sysconfig/i18n
+-LANG="en_US.UTF-8"
++LANG="ja_JP.utf8"
+</code></p>
+
+<p>/etc/sysconfig/i18nを再読み込みで解決。</p>
+
+<p><code>bash
+$ . /etc/sysconfig/i18n
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>
