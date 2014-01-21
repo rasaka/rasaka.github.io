@@ -9,9 +9,11 @@
   <meta name="author" content="R.Asaka">
 
   
-  <meta name="description" content="Octopressで一つ記事を書いたので、
-試しにアップしようとしたところ、以下のエラーが出てgenerate出来ない。 ※OSはCentOS 6.5で必要最小限のパッケージしか入れていない。
-https://github.com/2creatives/vagrant-centos/ &hellip;">
+  <meta name="description" content="Octopressの言語指定はデフォルトで英語になっているため、
+日本語の記事を書いていても、Chromeでアクセスすると英語サイト判定されて翻訳するかどうかの通知が出てしまう。 →source/_includes/head.html でlang属性を修正すれば良い 1
+2
+3
+$ vim &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +84,54 @@ https://github.com/2creatives/vagrant-centos/ &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h2 class="entry-title"><a href="/posts/2014/site-language-change/">Octopressの言語指定を日本語にする</a></h2>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-21T22:17:08+09:00" pubdate data-updated="true">2014/01/21</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Octopressの言語指定はデフォルトで英語になっているため、
+日本語の記事を書いていても、Chromeでアクセスすると英語サイト判定されて翻訳するかどうかの通知が出てしまう。</p>
+
+<p>→source/_includes/head.html でlang属性を修正すれば良い</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'>$ vim source/_includes/head.html
+</span><span class='line'><span class="gd">-&lt;!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]&gt;&lt;!--&gt;&lt;html class=&quot;no-js&quot; lang=&quot;en&quot;&gt;&lt;!--&lt;![endif]--&gt;</span>
+</span><span class='line'><span class="gi">+&lt;!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]&gt;&lt;!--&gt;&lt;html class=&quot;no-js&quot; lang=&quot;ja&quot;&gt;&lt;!--&lt;![endif]--&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -652,6 +702,10 @@ Vagrantfileで設定してみたところ、エラーが発生してNFSマウン
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/posts/2014/site-language-change/">Octopressの言語指定を日本語にする</a>
+      </li>
+    
+      <li class="post">
         <a href="/posts/2014/octopress-japanese-post/">Octopressで日本語の記事が書けない</a>
       </li>
     
@@ -667,11 +721,11 @@ Vagrantfileで設定してみたところ、エラーが発生してNFSマウン
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/centos/'>CentOS (1)</a></li><li><a href='/categories/mac/'>Mac (1)</a></li><li><a href='/categories/octopress/'>Octopress (1)</a></li><li><a href='/categories/vagrant/'>Vagrant (2)</a></li><li><a href='/categories/virtualbox/'>Virtualbox (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/centos/'>CentOS (1)</a></li><li><a href='/categories/html/'>HTML (1)</a></li><li><a href='/categories/mac/'>Mac (1)</a></li><li><a href='/categories/octopress/'>Octopress (2)</a></li><li><a href='/categories/vagrant/'>Vagrant (2)</a></li><li><a href='/categories/virtualbox/'>Virtualbox (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/categories/centos' style='font-size: 130.0%'>CentOS(1)</a> <a href='/categories/mac' style='font-size: 130.0%'>Mac(1)</a> <a href='/categories/octopress' style='font-size: 130.0%'>Octopress(1)</a> <a href='/categories/vagrant' style='font-size: 160.0%'>Vagrant(2)</a> <a href='/categories/virtualbox' style='font-size: 130.0%'>Virtualbox(1)</a> </span>
+    <span id="tag-cloud"><a href='/categories/centos' style='font-size: 130.0%'>CentOS(1)</a> <a href='/categories/html' style='font-size: 130.0%'>HTML(1)</a> <a href='/categories/mac' style='font-size: 130.0%'>Mac(1)</a> <a href='/categories/octopress' style='font-size: 160.0%'>Octopress(2)</a> <a href='/categories/vagrant' style='font-size: 160.0%'>Vagrant(2)</a> <a href='/categories/virtualbox' style='font-size: 130.0%'>Virtualbox(1)</a> </span>
 </section>
 <section>
   <h1>Latest Tweets</h1>
