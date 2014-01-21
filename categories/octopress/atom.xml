@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | 技ログ]]></title>
   <link href="http://blog.chacrue.com/categories/octopress/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-21T22:44:53+09:00</updated>
+  <updated>2014-01-21T22:59:27+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -28,6 +28,9 @@ $ vim source/_includes/head.html
 -&lt;!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]&gt;&lt;!--&gt;&lt;html class="no-js" lang="en"&gt;&lt;!--&lt;![endif]--&gt;
 +&lt;!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]&gt;&lt;!--&gt;&lt;html class="no-js" lang="ja"&gt;&lt;!--&lt;![endif]--&gt;
 </code></p>
+
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=FFFFFF&IS2=1&nou=1&bg1=FFFFFF&fc1=0A0808&lc1=0099FF&t=chacrue-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4798129674" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
 ]]></content>
   </entry>
   
