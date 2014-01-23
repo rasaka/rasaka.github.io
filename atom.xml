@@ -4,7 +4,7 @@
   <title><![CDATA[技ログ]]></title>
   <link href="http://blog.chacrue.com/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-21T22:59:27+09:00</updated>
+  <updated>2014-01-23T23:46:57+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -367,6 +367,8 @@ IPだけ変更して起動したところ、eth1が起動しなかった。</p>
     <content type="html"><![CDATA[<p>ホストとの共有は <a href="http://mitchellh.com/comparing-filesystem-performance-in-virtual-machines">NFSの方がパフォーマンスが良い</a> らしいので、<br/>
 Vagrantfileで設定してみたところ、エラーが発生してNFSマウント出来ない。</p>
 
+<p>※追記あり（2014/1/23）</p>
+
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>vim Vagrantfile
@@ -479,6 +481,83 @@ Vagrantfileで設定してみたところ、エラーが発生してNFSマウン
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>Vagrant<span class="nv">$ </span>df -h /app
 </span><span class='line'>Filesystem                     Size  Used Avail Use% Mounted on
 </span><span class='line'>192.168.33.1:/Users/xxx/app  466G   48G  417G  11% /app
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>追記(2014/1/23)</h3>
+
+<p>OS再起動時に再発。</p>
+
+<p>Mac OS側の/etc/exportsを確認してみると、Vagrantが自動生成している許可設定内のIP(10.0.2.15)と
+Vagrant up時に実行されているmountコマンドでのNFSサーバIP(192.168.33.1)とでネットワークが異なっている。</p>
+
+<p>許可していないのだからdenyしますよね…。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Mac<span class="nv">$ </span>cat /etc/exports
+</span><span class='line'><span class="c"># VAGRANT-BEGIN: </span>
+</span><span class='line'><span class="s2">&quot;/Users/xxx/app&quot;</span> 10.0.2.15 -alldirs -mapall<span class="o">=</span>501:20
+</span><span class='line'><span class="c"># VAGRANT-END: </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>default<span class="o">]</span> Mounting NFS shared folders...
+</span><span class='line'>The following SSH <span class="nb">command </span>responded with a non-zero <span class="nb">exit </span>status.
+</span><span class='line'>Vagrant assumes that this means the <span class="nb">command </span>failed!
+</span><span class='line'>
+</span><span class='line'>mount -o <span class="s1">&#39;vers=3,udp&#39;</span> 192.168.33.1:<span class="s1">&#39;/Users/xxx/app&#39;</span> /app
+</span><span class='line'>
+</span><span class='line'>Stdout from the <span class="nb">command</span>:
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>Stderr from the <span class="nb">command</span>:
+</span><span class='line'>
+</span><span class='line'>mount.nfs: access denied by server <span class="k">while </span>mounting 192.168.33.1:/Users/xxx/app
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>とりあえず、Mac OS側で/etc/exportsを手動変更。<br/>
+→仮想マシン側の192.168.33.0/24のIPを許可</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'>Mac$ sudo vim /etc/exports
+</span><span class='line'><span class="gi">+ &quot;/Users/xxx/app&quot; 192.168.33.12 -alldirs -mapall=501:20</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>手動でmountコマンド実行。<br/>
+→マウント出来た。</p>
+
+<p>ただ、これだと格好悪いので、Vagrantfileで綺麗に指定出来ないものだろうか。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Vagrant<span class="nv">$ </span>sudo mount -o <span class="s1">&#39;vers=3,udp&#39;</span> 192.168.33.1:<span class="s1">&#39;/Users/xxx/app&#39;</span> /app
+</span><span class='line'>Vagrant<span class="nv">$ </span>df /app
+</span><span class='line'>Filesystem                    1K-blocks     Used Available Use% Mounted on
+</span><span class='line'>192.168.33.1:/Users/xxx/app 487712928 49724160 437732768  11% /app
 </span></code></pre></td></tr></table></div></figure>
 
 

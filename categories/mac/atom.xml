@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mac | 技ログ]]></title>
   <link href="http://blog.chacrue.com/categories/mac/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-21T22:59:27+09:00</updated>
+  <updated>2014-01-23T23:46:57+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -20,6 +20,8 @@
     <id>http://blog.chacrue.com/posts/2014/nfs-mount-error</id>
     <content type="html"><![CDATA[<p>ホストとの共有は <a href="http://mitchellh.com/comparing-filesystem-performance-in-virtual-machines">NFSの方がパフォーマンスが良い</a> らしいので、<br/>
 Vagrantfileで設定してみたところ、エラーが発生してNFSマウント出来ない。</p>
+
+<p>※追記あり（2014/1/23）</p>
 
 <p><code>bash
 Mac$ vim Vagrantfile
@@ -94,6 +96,60 @@ Preparing to edit /etc/exports. Administrator privileges will be required...
 Vagrant$ df -h /app
 Filesystem                     Size  Used Avail Use% Mounted on
 192.168.33.1:/Users/xxx/app  466G   48G  417G  11% /app
+</code></p>
+
+<h3>追記(2014/1/23)</h3>
+
+<p>OS再起動時に再発。</p>
+
+<p>Mac OS側の/etc/exportsを確認してみると、Vagrantが自動生成している許可設定内のIP(10.0.2.15)と
+Vagrant up時に実行されているmountコマンドでのNFSサーバIP(192.168.33.1)とでネットワークが異なっている。</p>
+
+<p>許可していないのだからdenyしますよね…。</p>
+
+<p>```
+Mac$ cat /etc/exports</p>
+
+<h1>VAGRANT-BEGIN:</h1>
+
+<p>&ldquo;/Users/xxx/app&rdquo; 10.0.2.15 -alldirs -mapall=501:20</p>
+
+<h1>VAGRANT-END:</h1>
+
+<p>```</p>
+
+<p>```
+[default] Mounting NFS shared folders&hellip;
+The following SSH command responded with a non-zero exit status.
+Vagrant assumes that this means the command failed!</p>
+
+<p>mount -o &lsquo;vers=3,udp&rsquo; 192.168.33.1:&lsquo;/Users/xxx/app&rsquo; /app</p>
+
+<p>Stdout from the command:</p>
+
+<p>Stderr from the command:</p>
+
+<p>mount.nfs: access denied by server while mounting 192.168.33.1:/Users/xxx/app
+```</p>
+
+<p>とりあえず、Mac OS側で/etc/exportsを手動変更。<br/>
+→仮想マシン側の192.168.33.0/24のIPを許可</p>
+
+<p><code>diff
+Mac$ sudo vim /etc/exports
++ "/Users/xxx/app" 192.168.33.12 -alldirs -mapall=501:20
+</code></p>
+
+<p>手動でmountコマンド実行。<br/>
+→マウント出来た。</p>
+
+<p>ただ、これだと格好悪いので、Vagrantfileで綺麗に指定出来ないものだろうか。</p>
+
+<p><code>bash
+Vagrant$ sudo mount -o 'vers=3,udp' 192.168.33.1:'/Users/xxx/app' /app
+Vagrant$ df /app
+Filesystem                    1K-blocks     Used Available Use% Mounted on
+192.168.33.1:/Users/xxx/app 487712928 49724160 437732768  11% /app
 </code></p>
 
 <h3>バージョン</h3>
