@@ -4,7 +4,7 @@
   <title><![CDATA[技ログ]]></title>
   <link href="http://blog.chacrue.com/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-24T00:23:13+09:00</updated>
+  <updated>2014-01-26T16:28:24+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -328,7 +328,7 @@ IPだけ変更して起動したところ、eth1が起動しなかった。</p>
 
 <p>Virtualboxで該当仮想マシンの設定を確認すると、下記のエラーが発生していた。</p>
 
-<p><img src="http://blog.chacrue.com/images/screenshots/virtualbox-error-1.png" alt="virtualbox-error-1" /></p>
+<p><img src="http://blog.chacrue.com/images/screenshots/virtualbox-error-1.png" width="1024" height="711" title="Virtualbox error screenshot" alt="Virtualbox error screenshot"></p>
 
 <p>→VagrantfileでI/O APIC有効化設定。</p>
 
