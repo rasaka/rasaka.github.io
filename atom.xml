@@ -4,7 +4,7 @@
   <title><![CDATA[技ログ]]></title>
   <link href="http://blog.chacrue.com/atom.xml" rel="self"/>
   <link href="http://blog.chacrue.com/"/>
-  <updated>2014-01-26T18:12:05+09:00</updated>
+  <updated>2014-01-26T18:18:58+09:00</updated>
   <id>http://blog.chacrue.com/</id>
   <author>
     <name><![CDATA[R.Asaka]]></name>
@@ -14,15 +14,14 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Octopressでwidth,height属性を指定する]]></title>
+    <title type="html"><![CDATA[Octopressで画像のwidth,height属性を指定する]]></title>
     <link href="http://blog.chacrue.com/posts/2014/octopress-image-size/"/>
     <updated>2014-01-26T16:36:07+09:00</updated>
     <id>http://blog.chacrue.com/posts/2014/octopress-image-size</id>
-    <content type="html"><![CDATA[<p>Octopressで表示させる画像にwidth,height属性を指定するようにした。</p>
+    <content type="html"><![CDATA[<p>Octopressで表示させる画像にwidth,height属性を指定するようにした。<br/>
+<a href="http://octopress.org/docs/plugins/image-tag/">http://octopress.org/docs/plugins/image-tag/</a></p>
 
 <h3>Syntax</h3>
-
-<p><a href="http://octopress.org/docs/plugins/image-tag/">http://octopress.org/docs/plugins/image-tag/</a></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>{% img [class names] /path/to/image [width] [height] [title property [alt property]] %}</span></code></pre></td></tr></table></div></figure>
