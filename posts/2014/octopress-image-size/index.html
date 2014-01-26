@@ -5,15 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="ja"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Octopressの言語指定を日本語にする - 技ログ</title>
+  <title>Octopressでwidth,height属性を指定する - 技ログ</title>
   <meta name="author" content="R.Asaka">
 
   
-  <meta name="description" content="Octopressの言語指定はデフォルトで英語になっているため、
-日本語の記事を書いていても、Chromeでアクセスすると英語サイト判定されて翻訳するかどうかの通知が出てしまう。 →source/_includes/head.html でlang属性を修正すれば良い 1
-2
-3
-$ vim &hellip;">
+  <meta name="description" content="Octopressで表示させる画像にwidth,height属性を指定するようにした。 Syntax http://octopress.org/docs/plugins/image-tag/ 1
+{% img [class names] /path/to/image [width] [height &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,7 +19,7 @@ $ vim &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.chacrue.com/posts/2014/site-language-change/">
+  <link rel="canonical" href="http://blog.chacrue.com/posts/2014/octopress-image-size/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="技ログ" type="application/atom+xml">
@@ -87,10 +84,10 @@ $ vim &hellip;">
   
   <header>
     
-      <h2 class="entry-title">Octopressの言語指定を日本語にする</h2>
+      <h2 class="entry-title">Octopressでwidth,height属性を指定する</h2>
     <div class="sharing">
   
-    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/site-language-change/" data-via="narvaux" data-counturl="http://blog.chacrue.com/posts/2014/site-language-change/">Tweet</a>
+    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/octopress-image-size/" data-via="narvaux" data-counturl="http://blog.chacrue.com/posts/2014/octopress-image-size/">Tweet</a>
                               <!-- Google+1 -->
                               <!-- <div class="sns_gp"><div class="g-plusone" data-size="medium" data-count="true" href="http://wired.jp/2014/01/18/the-great-coder-vol10/">&nbsp;</div></div> -->
                               <!-- Hatena -->
@@ -98,15 +95,15 @@ $ vim &hellip;">
                             
   
   
-    <div class="g-plusone" data-size="midium" data-count="true" href="http://blog.chacrue.com/posts/2014/site-language-change/"> </div>
+    <div class="g-plusone" data-size="midium" data-count="true" href="http://blog.chacrue.com/posts/2014/octopress-image-size/"> </div>
   
   
-    <div class="fb-like" data-href="http://blog.chacrue.com/posts/2014/site-language-change/" data-send="false" data-width="75" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+    <div class="fb-like" data-href="http://blog.chacrue.com/posts/2014/octopress-image-size/" data-send="false" data-width="75" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
   
   
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="http://b.hatena.ne.jp/entry/http://blog.chacrue.com/posts/2014/site-language-change/" class="hatena-bookmark-button"
-          data-hatena-bookmark-title="Octopressの言語指定を日本語にする"
+    <a href="http://b.hatena.ne.jp/entry/http://blog.chacrue.com/posts/2014/octopress-image-size/" class="hatena-bookmark-button"
+          data-hatena-bookmark-title="Octopressでwidth,height属性を指定する"
           data-hatena-bookmark-layout="simple-balloon"
           title="このエントリーをはてなブックマークに追加">
         <img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
@@ -133,30 +130,39 @@ $ vim &hellip;">
   
 
 
-<time datetime="2014-01-21T22:17:08+09:00" pubdate data-updated="true">2014/01/21</time>
+<time datetime="2014-01-26T16:36:07+09:00" pubdate data-updated="true">2014/01/26</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Octopressの言語指定はデフォルトで英語になっているため、
-日本語の記事を書いていても、Chromeでアクセスすると英語サイト判定されて翻訳するかどうかの通知が出てしまう。</p>
+<div class="entry-content"><p>Octopressで表示させる画像にwidth,height属性を指定するようにした。</p>
 
-<p>→source/_includes/head.html でlang属性を修正すれば良い</p>
+<h3>Syntax</h3>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><a href="http://octopress.org/docs/plugins/image-tag/">http://octopress.org/docs/plugins/image-tag/</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{% img [class names] /path/to/image [width] [height] [title property [alt property]] %}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>例えば、下記のように記述する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='diff'><span class='line'>$ vim source/_includes/head.html
-</span><span class='line'><span class="gd">-&lt;!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]&gt;&lt;!--&gt;&lt;html class=&quot;no-js&quot; lang=&quot;en&quot;&gt;&lt;!--&lt;![endif]--&gt;</span>
-</span><span class='line'><span class="gi">+&lt;!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]&gt;&lt;!--&gt;&lt;html class=&quot;no-js&quot; lang=&quot;ja&quot;&gt;&lt;!--&lt;![endif]--&gt;</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gd">-![alt property](/images/image-1.png)</span>
+</span><span class='line'><span class="gi">+{% img /images/image-1.png 200 160 &quot;title property&quot; &quot;alt property&quot; %}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>結果、生成されるHTMLは以下のようになる。</p>
 
-
-<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=FFFFFF&IS2=1&nou=1&bg1=FFFFFF&fc1=0A0808&lc1=0099FF&t=chacrue-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4798129674" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gd">-&lt;p&gt;&lt;img src=&quot;/images/image-1.png&quot; alt=&quot;alt property&quot; /&gt;&lt;/p&gt;</span>
+</span><span class='line'><span class="gi">+&lt;p&gt;&lt;img src=&quot;/images/image-1.png&quot; width=&quot;200&quot; height=&quot;160&quot; title=&quot;title property&quot; alt=&quot;alt property&quot;&gt;&lt;/p&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
@@ -180,12 +186,12 @@ $ vim &hellip;">
   
 
 
-<time datetime="2014-01-21T22:17:08+09:00" pubdate data-updated="true">2014/01/21</time>
+<time datetime="2014-01-26T16:36:07+09:00" pubdate data-updated="true">2014/01/26</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/html/'>HTML</a>, <a class='category' href='/categories/octopress/'>Octopress</a>
+    <a class='category' href='/categories/octopress/'>Octopress</a>
   
 </span>
 
@@ -194,7 +200,7 @@ $ vim &hellip;">
     
       <div class="sharing">
   
-    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/site-language-change/" data-via="narvaux" data-counturl="http://blog.chacrue.com/posts/2014/site-language-change/">Tweet</a>
+    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/octopress-image-size/" data-via="narvaux" data-counturl="http://blog.chacrue.com/posts/2014/octopress-image-size/">Tweet</a>
                               <!-- Google+1 -->
                               <!-- <div class="sns_gp"><div class="g-plusone" data-size="medium" data-count="true" href="http://wired.jp/2014/01/18/the-great-coder-vol10/">&nbsp;</div></div> -->
                               <!-- Hatena -->
@@ -202,15 +208,15 @@ $ vim &hellip;">
                             
   
   
-    <div class="g-plusone" data-size="midium" data-count="true" href="http://blog.chacrue.com/posts/2014/site-language-change/"> </div>
+    <div class="g-plusone" data-size="midium" data-count="true" href="http://blog.chacrue.com/posts/2014/octopress-image-size/"> </div>
   
   
-    <div class="fb-like" data-href="http://blog.chacrue.com/posts/2014/site-language-change/" data-send="false" data-width="75" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+    <div class="fb-like" data-href="http://blog.chacrue.com/posts/2014/octopress-image-size/" data-send="false" data-width="75" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
   
   
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="http://b.hatena.ne.jp/entry/http://blog.chacrue.com/posts/2014/site-language-change/" class="hatena-bookmark-button"
-          data-hatena-bookmark-title="Octopressの言語指定を日本語にする"
+    <a href="http://b.hatena.ne.jp/entry/http://blog.chacrue.com/posts/2014/octopress-image-size/" class="hatena-bookmark-button"
+          data-hatena-bookmark-title="Octopressでwidth,height属性を指定する"
           data-hatena-bookmark-layout="simple-balloon"
           title="このエントリーをはてなブックマークに追加">
         <img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
@@ -225,10 +231,8 @@ $ vim &hellip;">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/posts/2014/octopress-japanese-post/" title="Previous Post: Octopressで日本語の記事が書けない">&laquo; Octopressで日本語の記事が書けない</a>
+        <a class="basic-alignment left" href="/posts/2014/site-language-change/" title="Previous Post: Octopressの言語指定を日本語にする">&laquo; Octopressの言語指定を日本語にする</a>
       
-      
-        <a class="basic-alignment right" href="/posts/2014/octopress-image-size/" title="Next Post: Octopressでwidth,height属性を指定する">Octopressでwidth,height属性を指定する &raquo;</a>
       
     </p>
   </footer>

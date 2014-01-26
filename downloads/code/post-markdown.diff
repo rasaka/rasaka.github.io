@@ -1,0 +1,2 @@
+-![alt property](/images/image-1.png)
++{% img /images/image-1.png 200 160 "title property" "alt property" %}
