@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 高速化 | 技ログ]]></title>
+  <link href="http://blog.chacrue.com/categories/gao-su-hua/atom.xml" rel="self"/>
+  <link href="http://blog.chacrue.com/"/>
+  <updated>2014-01-29T00:38:22+09:00</updated>
+  <id>http://blog.chacrue.com/</id>
+  <author>
+    <name><![CDATA[R.Asaka]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[OptiPNGでPNG形式の画像をロスレス圧縮・軽量化する]]></title>
+    <link href="http://blog.chacrue.com/posts/2014/optipng/"/>
+    <updated>2014-01-28T23:15:03+09:00</updated>
+    <id>http://blog.chacrue.com/posts/2014/optipng</id>
+    <content type="html"><![CDATA[<p>OptiPNGでPNG形式の画像を劣化なく圧縮し軽量化する。<br/>
+<a href="http://optipng.sourceforge.net/"><strong>OptiPNG公式</strong></a></p>
+
+<p>CentOSならyumでもインストール可能だが、バージョンが少し古いので、
+ソースからインストールした。</p>
+
+<p>```bash
+$ yum info optipng
+Name        : optipng
+Arch        : x86_64
+Version     : 0.6.4
+Release     : 1.el6
+Size        : 82 k
+Repo        : epel
+Summary     : PNG optimizer and converter
+URL         : <a href="http://optipng.sourceforge.net/">http://optipng.sourceforge.net/</a>
+License     : zlib
+Description : OptiPNG is a PNG optimizer that recompresses image files to a smaller size,</p>
+
+<pre><code>        : without losing any information. This program also converts external formats
+        : (BMP, GIF, PNM and TIFF) to optimized PNG, and performs PNG integrity checks
+        : and corrections.
+</code></pre>
+
+<p>```</p>
+
+<p>ソースをダウンロード・展開。</p>
+
+<p><code>bash
+$ wget "http://prdownloads.sourceforge.net/optipng/optipng-0.7.4.tar.gz?download"
+$ tar xzf optipng-0.7.4.tar.gz
+$ cd optipng-0.7.4
+</code></p>
+
+<p>インストール方法確認。</p>
+
+<p>```bash
+[root@vagrant-blog optipng-0.7.4]# cat README.txt</p>
+
+<h2>Build instructions</h2>
+
+<p>  On Unix, or under a Bourne-compatible shell, run ./configure and make:</p>
+
+<pre><code>    cd optipng-0.7.4/
+    ./configure
+    make
+    make test
+</code></pre>
+
+<h2>Installation instructions</h2>
+
+<p>  Build the program according to the instructions above.</p>
+
+<p>  On Unix:
+  &ndash; Make the &ldquo;install&rdquo; target:</p>
+
+<pre><code>    sudo make install
+</code></pre>
+
+<ul>
+<li>To uninstall, make the &ldquo;uninstall&rdquo; target:
+    sudo make uninstall</li>
+</ul>
+
+
+<p>[root@vagrant-blog optipng-0.7.4]# ./configure &mdash;help
+Usage:</p>
+
+<pre><code>./configure [options]
+</code></pre>
+
+<p>Options:</p>
+
+<pre><code>-h, -help               Show this help
+</code></pre>
+
+<p>Installation directories:</p>
+
+<pre><code>-prefix=PREFIX          Install architecture-independent files in PREFIX
+                        [default: /usr/local]
+-exec-prefix=EPREFIX    Install architecture-dependent files in EPREFIX
+                        [default: PREFIX]
+-bindir=DIR             Install executable in DIR [default: EPREFIX/bin]
+-mandir=DIR             Install manual in DIR [default: PREFIX/man]
+</code></pre>
+
+<p>Optional features:</p>
+
+<pre><code>-enable-debug           Enable debug build flags and run-time checks
+</code></pre>
+
+<p>Optional packages:</p>
+
+<pre><code>-with-system-libpng     Use the system-supplied libpng
+                        [default: false]
+-with-system-zlib       Use the system-supplied zlib
+                        [default: with-system-libpng]
+</code></pre>
+
+<p>Environment variables:</p>
+
+<pre><code>CC                      C compiler command
+LD                      Linker command
+CFLAGS                  C compiler flags (e.g. -O3)
+CPPFLAGS                C preprocessor flags (e.g. -I DIR)
+LDFLAGS                 Linker flags (e.g. -L DIR)
+LIBS                    Additional libraries (e.g. -lfoo)
+</code></pre>
+
+<p>```</p>
+
+<p>終了コードを確認しつつ、configure→make→make test→make installする。</p>
+
+<p><code>
+$ ./configure ; echo $?
+0
+$ CPU_CORE=$(grep -c '^processor\b' /proc/cpuinfo)
+$ make -j $CPU_CORE ; echo $?
+0
+$ make test -j $CPU_CORE ; echo $?
+0
+$ sudo make install ; echo $?
+cd src/optipng &amp;&amp; \
+  make install &amp;&amp; \
+  cd ../..
+make[1]: Entering directory `/usr/local/src/optipng-0.7.4/src/optipng'
+mkdir -p /usr/local/bin
+mkdir -p /usr/local/man/man1
+cp -f -p optipng /usr/local/bin
+cp -f -p man/optipng.1 /usr/local/man/man1
+make[1]: Leaving directory `/usr/local/src/optipng-0.7.4/src/optipng'
+0
+</code></p>
+
+<p>インストール確認。</p>
+
+<p>```bash
+$ optipng -v
+OptiPNG version 0.7.4
+Copyright &copy; 2001-2012 Cosmin Truta and the Contributing Authors.</p>
+
+<p>This program is open-source software. See LICENSE for more details.</p>
+
+<p>Portions of this software are based in part on the work of:
+  Jean-loup Gailly and Mark Adler (zlib)
+  Glenn Randers-Pehrson and the PNG Development Group (libpng)
+  Miyasaka Masaru (BMP support)
+  David Koblas (GIF support)</p>
+
+<p>Using libpng version 1.4.12 and zlib version 1.2.7-optipng
+```</p>
+
+<p>オプション確認。<br/>
+普通に使う分にはオプションなしでファイル指定するだけで圧縮してくれる。<br/>
+→細かくオプションの内容を確認したい場合は<code>man optipng</code>する</p>
+
+<p>```
+$ optipng &mdash;help
+Synopsis:</p>
+
+<pre><code>optipng [options] files ...
+</code></pre>
+
+<p>Files:</p>
+
+<pre><code>Image files of type: PNG, BMP, GIF, PNM or TIFF
+</code></pre>
+
+<p>Basic options:</p>
+
+<pre><code>-?, -h, -help show this help
+-o &lt;level&gt;    optimization level (0-7)    [default: 2]
+-v      run in verbose mode / show copyright and version info
+</code></pre>
+
+<p>General options:</p>
+
+<pre><code>-backup, -keep  keep a backup of the modified files
+-clobber    overwrite existing files
+-fix    enable error recovery
+-force    enforce writing of a new output file
+-preserve   preserve file attributes if possible
+-quiet, -silent run in quiet mode
+-simulate   run in simulation mode
+-out &lt;file&gt;   write output file to &lt;file&gt;
+-dir &lt;directory&gt;  write output file(s) to &lt;directory&gt;
+-log &lt;file&gt;   log messages to &lt;file&gt;
+--      stop option switch parsing
+</code></pre>
+
+<p>Optimization options:</p>
+
+<pre><code>-f &lt;filters&gt;  PNG delta filters (0-5)     [default: 0,5]
+-i &lt;type&gt;   PNG interlace type (0-1)
+-zc &lt;levels&gt;  zlib compression levels (1-9)   [default: 9]
+-zm &lt;levels&gt;  zlib memory levels (1-9)    [default: 8]
+-zs &lt;strategies&gt;  zlib compression strategies (0-3) [default: 0-3]
+-zw &lt;size&gt;    zlib window size (256,512,1k,2k,4k,8k,16k,32k)
+-full   produce a full report on IDAT (might reduce speed)
+-nb     no bit depth reduction
+-nc     no color type reduction
+-np     no palette reduction
+-nx     no reductions
+-nz     no IDAT recoding
+</code></pre>
+
+<p>Editing options:</p>
+
+<pre><code>-snip   cut one image out of multi-image or animation files
+-strip &lt;objects&gt;  strip metadata objects (e.g. "all")
+</code></pre>
+
+<p>Optimization levels:</p>
+
+<pre><code>-o0   &lt;=&gt; -o1 -nx -nz       (0 or 1 trials)
+-o1   &lt;=&gt; -zc9 -zm8 -zs0 -f0      (1 trial)
+    (or...) -zc9 -zm8 -zs1 -f5      (1 trial)
+-o2   &lt;=&gt; -zc9 -zm8 -zs0-3 -f0,5      (8 trials)
+-o3   &lt;=&gt; -zc9 -zm8-9 -zs0-3 -f0,5    (16 trials)
+-o4   &lt;=&gt; -zc9 -zm8 -zs0-3 -f0-5      (24 trials)
+-o5   &lt;=&gt; -zc9 -zm8-9 -zs0-3 -f0-5    (48 trials)
+-o6   &lt;=&gt; -zc1-9 -zm8 -zs0-3 -f0-5    (120 trials)
+-o7   &lt;=&gt; -zc1-9 -zm8-9 -zs0-3 -f0-5    (240 trials)
+-o7 -zm1-9  &lt;=&gt; -zc1-9 -zm1-9 -zs0-3 -f0-5    (1080 trials)
+</code></pre>
+
+<p>Notes:</p>
+
+<pre><code>The combination for -o1 is chosen heuristically.
+Exhaustive combinations such as "-o7 -zm1-9" are not generally recommended.
+</code></pre>
+
+<p>Examples:</p>
+
+<pre><code>optipng file.png            (default speed)
+optipng -o5 file.png          (slow)
+optipng -o7 file.png          (very slow)
+</code></pre>
+
+<p>```</p>
+
+<p>ここでは360KBの画像を圧縮してみる。<br/>
+まずは<code>-simulate</code>オプションでどの程度圧縮されるか確認。<br/>
+※実際には処理は行われない</p>
+
+<p>→100KB程度圧縮される模様</p>
+
+<p>```bash</p>
+
+<h1>optipng -simulate virtualbox-error-1.png</h1>
+
+<p>** Processing: virtualbox-error-1.png
+1024x711 pixels, 4x8 bits/pixel, RGB+alpha
+Reducing image to 3x8 bits/pixel, RGB
+Input IDAT size = 365449 bytes
+Input file size = 368428 bytes</p>
+
+<p>Trying:
+  zc = 9  zm = 8  zs = 0  f = 0   IDAT size = 262703</p>
+
+<p>Selecting parameters:
+  zc = 9  zm = 8  zs = 0  f = 0   IDAT size = 262703</p>
+
+<p>No output: simulation mode.
+```</p>
+
+<p><code>-backup</code>オプションでバックアップファイルを作成しつつ、圧縮してみる。</p>
+
+<ul>
+<li>27.96%圧縮され、約100KB軽量化</li>
+<li>処理時間は2秒程度（MacBook Pro Retina Late 2013 Core i5のVirtualbox上の仮想マシン）</li>
+</ul>
+
+
+<p>```bash
+$ optipng -backup virtualbox-error-1.png
+** Processing: virtualbox-error-1.png
+1024x711 pixels, 4x8 bits/pixel, RGB+alpha
+Reducing image to 3x8 bits/pixel, RGB
+Input IDAT size = 365449 bytes
+Input file size = 368428 bytes</p>
+
+<p>Trying:
+  zc = 9  zm = 8  zs = 0  f = 0   IDAT size = 262703</p>
+
+<p>Selecting parameters:
+  zc = 9  zm = 8  zs = 0  f = 0   IDAT size = 262703</p>
+
+<p>Output IDAT size = 262703 bytes (102746 bytes decrease)
+Output file size = 265418 bytes (103010 bytes = 27.96% decrease)</p>
+
+<p>$ ll virtualbox-error-1.png*
+-rw-r&mdash;r&mdash;  1  501 501  265418 2014-01-28 23:15 virtualbox-error-1.png
+-rw-r&mdash;r&mdash;  1  501 501  368428 2014-01-28 23:30 virtualbox-error-1.png.bak
+```</p>
+
+<p>```bash</p>
+
+<h1>time optipng -backup virtualbox-error-1.png</h1>
+
+<p>** Processing: virtualbox-error-1.png
+1024x711 pixels, 4x8 bits/pixel, RGB+alpha
+Reducing image to 3x8 bits/pixel, RGB
+Input IDAT size = 365449 bytes
+Input file size = 368428 bytes</p>
+
+<p>Trying:
+  zc = 9  zm = 8  zs = 0  f = 0   IDAT size = 262703</p>
+
+<p>Selecting parameters:
+  zc = 9  zm = 8  zs = 0  f = 0   IDAT size = 262703</p>
+
+<p>Output IDAT size = 262703 bytes (102746 bytes decrease)
+Output file size = 265418 bytes (103010 bytes = 27.96% decrease)</p>
+
+<p>real  0m1.905s
+user  0m1.900s
+sys 0m0.003s
+```</p>
+
+<p><code>bash
+$ grep "model name" /proc/cpuinfo
+model name  : Intel(R) Core(TM) i5-4288U CPU @ 2.60GHz
+model name  : Intel(R) Core(TM) i5-4288U CPU @ 2.60GHz
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

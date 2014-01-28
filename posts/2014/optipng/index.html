@@ -1,0 +1,809 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="ja"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>OptiPNGでPNG形式の画像をロスレス圧縮・軽量化する - 技ログ</title>
+  <meta name="author" content="R.Asaka">
+
+  
+  <meta name="description" content="OptiPNGでPNG形式の画像を劣化なく圧縮し軽量化する。
+OptiPNG公式 CentOSならyumでもインストール可能だが、バージョンが少し古いので、
+ソースからインストールした。 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+$ yum info optipng &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chacrue.com/posts/2014/optipng/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="技ログ" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script language="JavaScript">
+$(document).ready( function () {
+   $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
+})
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    var pluginUrl =
+    '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+    _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+    _gaq.push(['_setAccount', 'UA-20504197-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">技ログ</a></h1>
+  
+    <h2>Tech, etc.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chacrue.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h2 class="entry-title">OptiPNGでPNG形式の画像をロスレス圧縮・軽量化する</h2>
+    <div class="sharing">
+  
+    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/optipng/" data-via="narvaux" data-counturl="http://blog.chacrue.com/posts/2014/optipng/">Tweet</a>
+                              <!-- Google+1 -->
+                              <!-- <div class="sns_gp"><div class="g-plusone" data-size="medium" data-count="true" href="http://wired.jp/2014/01/18/the-great-coder-vol10/">&nbsp;</div></div> -->
+                              <!-- Hatena -->
+                                <!-- <div class="sns_hb"><a href="http://b.hatena.ne.jp/entry/http://wired.jp/2014/01/18/the-great-coder-vol10/" class="hatena-bookmark-button" data-hatena-bookmark-title="高校3年でグーグルをソデにしたルーマニアの怪童イオヌッツ。  世界が欲しがる頭の中。" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a></div> -->
+                            
+  
+  
+    <div class="g-plusone" data-size="midium" data-count="true" href="http://blog.chacrue.com/posts/2014/optipng/"> </div>
+  
+  
+    <div class="fb-like" data-href="http://blog.chacrue.com/posts/2014/optipng/" data-send="false" data-width="75" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+  
+  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="http://b.hatena.ne.jp/entry/http://blog.chacrue.com/posts/2014/optipng/" class="hatena-bookmark-button"
+          data-hatena-bookmark-title="OptiPNGでPNG形式の画像をロスレス圧縮・軽量化する"
+          data-hatena-bookmark-layout="simple-balloon"
+          title="このエントリーをはてなブックマークに追加">
+        <img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+              alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" />
+    </a>
+    <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js"
+          charset="utf-8" async="async">
+    </script>
+  
+</div>
+
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-28T23:15:03+09:00" pubdate data-updated="true">2014/01/28</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>OptiPNGでPNG形式の画像を劣化なく圧縮し軽量化する。<br/>
+<a href="http://optipng.sourceforge.net/"><strong>OptiPNG公式</strong></a></p>
+
+<p>CentOSならyumでもインストール可能だが、バージョンが少し古いので、
+ソースからインストールした。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>yum info optipng
+</span><span class='line'>Name        : optipng
+</span><span class='line'>Arch        : x86_64
+</span><span class='line'>Version     : 0.6.4
+</span><span class='line'>Release     : 1.el6
+</span><span class='line'>Size        : 82 k
+</span><span class='line'>Repo        : epel
+</span><span class='line'>Summary     : PNG optimizer and converter
+</span><span class='line'>URL         : http://optipng.sourceforge.net/
+</span><span class='line'>License     : zlib
+</span><span class='line'>Description : OptiPNG is a PNG optimizer that recompresses image files to a smaller size,
+</span><span class='line'>            : without losing any information. This program also converts external formats
+</span><span class='line'>            : <span class="o">(</span>BMP, GIF, PNM and TIFF<span class="o">)</span> to optimized PNG, and performs PNG integrity checks
+</span><span class='line'>            : and corrections.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ソースをダウンロード・展開。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget <span class="s2">&quot;http://prdownloads.sourceforge.net/optipng/optipng-0.7.4.tar.gz?download&quot;</span>
+</span><span class='line'><span class="nv">$ </span>tar xzf optipng-0.7.4.tar.gz
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>optipng-0.7.4
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>インストール方法確認。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>root@vagrant-blog optipng-0.7.4<span class="o">]</span><span class="c"># cat README.txt</span>
+</span><span class='line'>Build instructions
+</span><span class='line'>------------------
+</span><span class='line'>  On Unix, or under a Bourne-compatible shell, run ./configure and make:
+</span><span class='line'>        <span class="nb">cd </span>optipng-0.7.4/
+</span><span class='line'>        ./configure
+</span><span class='line'>        make
+</span><span class='line'>        make <span class="nb">test</span>
+</span><span class='line'>
+</span><span class='line'>Installation instructions
+</span><span class='line'>-------------------------
+</span><span class='line'>  Build the program according to the instructions above.
+</span><span class='line'>
+</span><span class='line'>  On Unix:
+</span><span class='line'>  - Make the <span class="s2">&quot;install&quot;</span> target:
+</span><span class='line'>        sudo make install
+</span><span class='line'>  - To uninstall, make the <span class="s2">&quot;uninstall&quot;</span> target:
+</span><span class='line'>        sudo make uninstall
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>root@vagrant-blog optipng-0.7.4<span class="o">]</span><span class="c"># ./configure --help</span>
+</span><span class='line'>Usage:
+</span><span class='line'>    ./configure <span class="o">[</span>options<span class="o">]</span>
+</span><span class='line'>Options:
+</span><span class='line'>    -h, -help               Show this <span class="nb">help</span>
+</span><span class='line'>Installation directories:
+</span><span class='line'>    -prefix<span class="o">=</span>PREFIX          Install architecture-independent files in PREFIX
+</span><span class='line'>                            <span class="o">[</span>default: /usr/local<span class="o">]</span>
+</span><span class='line'>    -exec-prefix<span class="o">=</span>EPREFIX    Install architecture-dependent files in EPREFIX
+</span><span class='line'>                            <span class="o">[</span>default: PREFIX<span class="o">]</span>
+</span><span class='line'>    -bindir<span class="o">=</span>DIR             Install executable in DIR <span class="o">[</span>default: EPREFIX/bin<span class="o">]</span>
+</span><span class='line'>    -mandir<span class="o">=</span>DIR             Install manual in DIR <span class="o">[</span>default: PREFIX/man<span class="o">]</span>
+</span><span class='line'>Optional features:
+</span><span class='line'>    -enable-debug           Enable debug build flags and run-time checks
+</span><span class='line'>Optional packages:
+</span><span class='line'>    -with-system-libpng     Use the system-supplied libpng
+</span><span class='line'>                            <span class="o">[</span>default: <span class="nb">false</span><span class="o">]</span>
+</span><span class='line'>    -with-system-zlib       Use the system-supplied zlib
+</span><span class='line'>                            <span class="o">[</span>default: with-system-libpng<span class="o">]</span>
+</span><span class='line'>Environment variables:
+</span><span class='line'>    CC                      C compiler <span class="nb">command</span>
+</span><span class='line'><span class="nb">    </span>LD                      Linker <span class="nb">command</span>
+</span><span class='line'><span class="nb">    </span>CFLAGS                  C compiler flags <span class="o">(</span>e.g. -O3<span class="o">)</span>
+</span><span class='line'>    CPPFLAGS                C preprocessor flags <span class="o">(</span>e.g. -I DIR<span class="o">)</span>
+</span><span class='line'>    LDFLAGS                 Linker flags <span class="o">(</span>e.g. -L DIR<span class="o">)</span>
+</span><span class='line'>    LIBS                    Additional libraries <span class="o">(</span>e.g. -lfoo<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>終了コードを確認しつつ、configure→make→make test→make installする。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>./configure ; <span class="nb">echo</span> <span class="nv">$?</span>
+</span><span class='line'>0
+</span><span class='line'><span class="nv">$ CPU_CORE</span><span class="o">=</span><span class="k">$(</span>grep -c <span class="s1">&#39;^processor\b&#39;</span> /proc/cpuinfo<span class="k">)</span>
+</span><span class='line'><span class="nv">$ </span>make -j <span class="nv">$CPU_CORE</span> ; <span class="nb">echo</span> <span class="nv">$?</span>
+</span><span class='line'>0
+</span><span class='line'><span class="nv">$ </span>make <span class="nb">test</span> -j <span class="nv">$CPU_CORE</span> ; <span class="nb">echo</span> <span class="nv">$?</span>
+</span><span class='line'>0
+</span><span class='line'><span class="nv">$ </span>sudo make install ; <span class="nb">echo</span> <span class="nv">$?</span>
+</span><span class='line'><span class="nb">cd </span>src/optipng <span class="o">&amp;&amp;</span> <span class="se">\</span>
+</span><span class='line'>  make install <span class="o">&amp;&amp;</span> <span class="se">\</span>
+</span><span class='line'>  <span class="nb">cd</span> ../..
+</span><span class='line'>make<span class="o">[</span>1<span class="o">]</span>: Entering directory <span class="sb">`</span>/usr/local/src/optipng-0.7.4/src/optipng<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">mkdir -p /usr/local/bin</span>
+</span><span class='line'><span class="s1">mkdir -p /usr/local/man/man1</span>
+</span><span class='line'><span class="s1">cp -f -p optipng /usr/local/bin</span>
+</span><span class='line'><span class="s1">cp -f -p man/optipng.1 /usr/local/man/man1</span>
+</span><span class='line'><span class="s1">make[1]: Leaving directory `/usr/local/src/optipng-0.7.4/src/optipng&#39;</span>
+</span><span class='line'>0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>インストール確認。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>optipng -v
+</span><span class='line'>OptiPNG version 0.7.4
+</span><span class='line'>Copyright <span class="o">(</span>C<span class="o">)</span> 2001-2012 Cosmin Truta and the Contributing Authors.
+</span><span class='line'>
+</span><span class='line'>This program is open-source software. See LICENSE <span class="k">for </span>more details.
+</span><span class='line'>
+</span><span class='line'>Portions of this software are based in part on the work of:
+</span><span class='line'>  Jean-loup Gailly and Mark Adler <span class="o">(</span>zlib<span class="o">)</span>
+</span><span class='line'>  Glenn Randers-Pehrson and the PNG Development Group <span class="o">(</span>libpng<span class="o">)</span>
+</span><span class='line'>  Miyasaka Masaru <span class="o">(</span>BMP support<span class="o">)</span>
+</span><span class='line'>  David Koblas <span class="o">(</span>GIF support<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Using libpng version 1.4.12 and zlib version 1.2.7-optipng
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>オプション確認。<br/>
+普通に使う分にはオプションなしでファイル指定するだけで圧縮してくれる。<br/>
+→細かくオプションの内容を確認したい場合は<code>man optipng</code>する</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>optipng --help
+</span><span class='line'>Synopsis:
+</span><span class='line'>    optipng <span class="o">[</span>options<span class="o">]</span> files ...
+</span><span class='line'>Files:
+</span><span class='line'>    Image files of <span class="nb">type</span>: PNG, BMP, GIF, PNM or TIFF
+</span><span class='line'>Basic options:
+</span><span class='line'>    -?, -h, -help show this <span class="nb">help</span>
+</span><span class='line'>    -o &lt;level&gt;    optimization level <span class="o">(</span>0-7<span class="o">)</span>    <span class="o">[</span>default: 2<span class="o">]</span>
+</span><span class='line'>    -v      run in verbose mode / show copyright and version info
+</span><span class='line'>General options:
+</span><span class='line'>    -backup, -keep  keep a backup of the modified files
+</span><span class='line'>    -clobber    overwrite existing files
+</span><span class='line'>    -fix    <span class="nb">enable </span>error recovery
+</span><span class='line'>    -force    enforce writing of a new output file
+</span><span class='line'>    -preserve   preserve file attributes <span class="k">if </span>possible
+</span><span class='line'>    -quiet, -silent run in quiet mode
+</span><span class='line'>    -simulate   run in simulation mode
+</span><span class='line'>    -out &lt;file&gt;   write output file to &lt;file&gt;
+</span><span class='line'>    -dir &lt;directory&gt;  write output file<span class="o">(</span>s<span class="o">)</span> to &lt;directory&gt;
+</span><span class='line'>    -log &lt;file&gt;   log messages to &lt;file&gt;
+</span><span class='line'>    --      stop option switch parsing
+</span><span class='line'>Optimization options:
+</span><span class='line'>    -f &lt;filters&gt;  PNG delta filters <span class="o">(</span>0-5<span class="o">)</span>     <span class="o">[</span>default: 0,5<span class="o">]</span>
+</span><span class='line'>    -i &lt;<span class="nb">type</span>&gt;   PNG interlace <span class="nb">type</span> <span class="o">(</span>0-1<span class="o">)</span>
+</span><span class='line'>    -zc &lt;levels&gt;  zlib compression levels <span class="o">(</span>1-9<span class="o">)</span>   <span class="o">[</span>default: 9<span class="o">]</span>
+</span><span class='line'>    -zm &lt;levels&gt;  zlib memory levels <span class="o">(</span>1-9<span class="o">)</span>    <span class="o">[</span>default: 8<span class="o">]</span>
+</span><span class='line'>    -zs &lt;strategies&gt;  zlib compression strategies <span class="o">(</span>0-3<span class="o">)</span> <span class="o">[</span>default: 0-3<span class="o">]</span>
+</span><span class='line'>    -zw &lt;size&gt;    zlib window size <span class="o">(</span>256,512,1k,2k,4k,8k,16k,32k<span class="o">)</span>
+</span><span class='line'>    -full   produce a full report on IDAT <span class="o">(</span>might reduce speed<span class="o">)</span>
+</span><span class='line'>    -nb     no bit depth reduction
+</span><span class='line'>    -nc     no color <span class="nb">type </span>reduction
+</span><span class='line'>    -np     no palette reduction
+</span><span class='line'>    -nx     no reductions
+</span><span class='line'>    -nz     no IDAT recoding
+</span><span class='line'>Editing options:
+</span><span class='line'>    -snip   cut one image out of multi-image or animation files
+</span><span class='line'>    -strip &lt;objects&gt;  strip metadata objects <span class="o">(</span>e.g. <span class="s2">&quot;all&quot;</span><span class="o">)</span>
+</span><span class='line'>Optimization levels:
+</span><span class='line'>    -o0   &lt;<span class="o">=</span>&gt; -o1 -nx -nz       <span class="o">(</span>0 or 1 trials<span class="o">)</span>
+</span><span class='line'>    -o1   &lt;<span class="o">=</span>&gt; -zc9 -zm8 -zs0 -f0      <span class="o">(</span>1 trial<span class="o">)</span>
+</span><span class='line'>        <span class="o">(</span>or...<span class="o">)</span> -zc9 -zm8 -zs1 -f5      <span class="o">(</span>1 trial<span class="o">)</span>
+</span><span class='line'>    -o2   &lt;<span class="o">=</span>&gt; -zc9 -zm8 -zs0-3 -f0,5      <span class="o">(</span>8 trials<span class="o">)</span>
+</span><span class='line'>    -o3   &lt;<span class="o">=</span>&gt; -zc9 -zm8-9 -zs0-3 -f0,5    <span class="o">(</span>16 trials<span class="o">)</span>
+</span><span class='line'>    -o4   &lt;<span class="o">=</span>&gt; -zc9 -zm8 -zs0-3 -f0-5      <span class="o">(</span>24 trials<span class="o">)</span>
+</span><span class='line'>    -o5   &lt;<span class="o">=</span>&gt; -zc9 -zm8-9 -zs0-3 -f0-5    <span class="o">(</span>48 trials<span class="o">)</span>
+</span><span class='line'>    -o6   &lt;<span class="o">=</span>&gt; -zc1-9 -zm8 -zs0-3 -f0-5    <span class="o">(</span>120 trials<span class="o">)</span>
+</span><span class='line'>    -o7   &lt;<span class="o">=</span>&gt; -zc1-9 -zm8-9 -zs0-3 -f0-5    <span class="o">(</span>240 trials<span class="o">)</span>
+</span><span class='line'>    -o7 -zm1-9  &lt;<span class="o">=</span>&gt; -zc1-9 -zm1-9 -zs0-3 -f0-5    <span class="o">(</span>1080 trials<span class="o">)</span>
+</span><span class='line'>Notes:
+</span><span class='line'>    The combination <span class="k">for</span> -o1 is chosen heuristically.
+</span><span class='line'>    Exhaustive combinations such as <span class="s2">&quot;-o7 -zm1-9&quot;</span> are not generally recommended.
+</span><span class='line'>Examples:
+</span><span class='line'>    optipng file.png            <span class="o">(</span>default speed<span class="o">)</span>
+</span><span class='line'>    optipng -o5 file.png          <span class="o">(</span>slow<span class="o">)</span>
+</span><span class='line'>    optipng -o7 file.png          <span class="o">(</span>very slow<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ここでは360KBの画像を圧縮してみる。<br/>
+まずは<code>-simulate</code>オプションでどの程度圧縮されるか確認。<br/>
+※実際には処理は行われない</p>
+
+<p>→100KB程度圧縮される模様</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># optipng -simulate virtualbox-error-1.png</span>
+</span><span class='line'>** Processing: virtualbox-error-1.png
+</span><span class='line'>1024x711 pixels, 4x8 bits/pixel, RGB+alpha
+</span><span class='line'>Reducing image to 3x8 bits/pixel, RGB
+</span><span class='line'>Input IDAT <span class="nv">size</span> <span class="o">=</span> 365449 bytes
+</span><span class='line'>Input file <span class="nv">size</span> <span class="o">=</span> 368428 bytes
+</span><span class='line'>
+</span><span class='line'>Trying:
+</span><span class='line'>  <span class="nv">zc</span> <span class="o">=</span> 9  <span class="nv">zm</span> <span class="o">=</span> 8  <span class="nv">zs</span> <span class="o">=</span> 0  <span class="nv">f</span> <span class="o">=</span> 0   IDAT <span class="nv">size</span> <span class="o">=</span> 262703
+</span><span class='line'>
+</span><span class='line'>Selecting parameters:
+</span><span class='line'>  <span class="nv">zc</span> <span class="o">=</span> 9  <span class="nv">zm</span> <span class="o">=</span> 8  <span class="nv">zs</span> <span class="o">=</span> 0  <span class="nv">f</span> <span class="o">=</span> 0   IDAT <span class="nv">size</span> <span class="o">=</span> 262703
+</span><span class='line'>
+</span><span class='line'>No output: simulation mode.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>-backup</code>オプションでバックアップファイルを作成しつつ、圧縮してみる。</p>
+
+<ul>
+<li>27.96%圧縮され、約100KB軽量化</li>
+<li>処理時間は2秒程度（MacBook Pro Retina Late 2013 Core i5のVirtualbox上の仮想マシン）</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>optipng -backup virtualbox-error-1.png
+</span><span class='line'>** Processing: virtualbox-error-1.png
+</span><span class='line'>1024x711 pixels, 4x8 bits/pixel, RGB+alpha
+</span><span class='line'>Reducing image to 3x8 bits/pixel, RGB
+</span><span class='line'>Input IDAT <span class="nv">size</span> <span class="o">=</span> 365449 bytes
+</span><span class='line'>Input file <span class="nv">size</span> <span class="o">=</span> 368428 bytes
+</span><span class='line'>
+</span><span class='line'>Trying:
+</span><span class='line'>  <span class="nv">zc</span> <span class="o">=</span> 9  <span class="nv">zm</span> <span class="o">=</span> 8  <span class="nv">zs</span> <span class="o">=</span> 0  <span class="nv">f</span> <span class="o">=</span> 0   IDAT <span class="nv">size</span> <span class="o">=</span> 262703
+</span><span class='line'>
+</span><span class='line'>Selecting parameters:
+</span><span class='line'>  <span class="nv">zc</span> <span class="o">=</span> 9  <span class="nv">zm</span> <span class="o">=</span> 8  <span class="nv">zs</span> <span class="o">=</span> 0  <span class="nv">f</span> <span class="o">=</span> 0   IDAT <span class="nv">size</span> <span class="o">=</span> 262703
+</span><span class='line'>
+</span><span class='line'>Output IDAT <span class="nv">size</span> <span class="o">=</span> 262703 bytes <span class="o">(</span>102746 bytes decrease<span class="o">)</span>
+</span><span class='line'>Output file <span class="nv">size</span> <span class="o">=</span> 265418 bytes <span class="o">(</span>103010 <span class="nv">bytes</span> <span class="o">=</span> 27.96% decrease<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>ll virtualbox-error-1.png*
+</span><span class='line'>-rw-r--r--  1  501 501  265418 2014-01-28 23:15 virtualbox-error-1.png
+</span><span class='line'>-rw-r--r--  1  501 501  368428 2014-01-28 23:30 virtualbox-error-1.png.bak
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># time optipng -backup virtualbox-error-1.png</span>
+</span><span class='line'>** Processing: virtualbox-error-1.png
+</span><span class='line'>1024x711 pixels, 4x8 bits/pixel, RGB+alpha
+</span><span class='line'>Reducing image to 3x8 bits/pixel, RGB
+</span><span class='line'>Input IDAT <span class="nv">size</span> <span class="o">=</span> 365449 bytes
+</span><span class='line'>Input file <span class="nv">size</span> <span class="o">=</span> 368428 bytes
+</span><span class='line'>
+</span><span class='line'>Trying:
+</span><span class='line'>  <span class="nv">zc</span> <span class="o">=</span> 9  <span class="nv">zm</span> <span class="o">=</span> 8  <span class="nv">zs</span> <span class="o">=</span> 0  <span class="nv">f</span> <span class="o">=</span> 0   IDAT <span class="nv">size</span> <span class="o">=</span> 262703
+</span><span class='line'>
+</span><span class='line'>Selecting parameters:
+</span><span class='line'>  <span class="nv">zc</span> <span class="o">=</span> 9  <span class="nv">zm</span> <span class="o">=</span> 8  <span class="nv">zs</span> <span class="o">=</span> 0  <span class="nv">f</span> <span class="o">=</span> 0   IDAT <span class="nv">size</span> <span class="o">=</span> 262703
+</span><span class='line'>
+</span><span class='line'>Output IDAT <span class="nv">size</span> <span class="o">=</span> 262703 bytes <span class="o">(</span>102746 bytes decrease<span class="o">)</span>
+</span><span class='line'>Output file <span class="nv">size</span> <span class="o">=</span> 265418 bytes <span class="o">(</span>103010 <span class="nv">bytes</span> <span class="o">=</span> 27.96% decrease<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>real  0m1.905s
+</span><span class='line'>user  0m1.900s
+</span><span class='line'>sys 0m0.003s
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>grep <span class="s2">&quot;model name&quot;</span> /proc/cpuinfo
+</span><span class='line'>model name  : Intel<span class="o">(</span>R<span class="o">)</span> Core<span class="o">(</span>TM<span class="o">)</span> i5-4288U CPU @ 2.60GHz
+</span><span class='line'>model name  : Intel<span class="o">(</span>R<span class="o">)</span> Core<span class="o">(</span>TM<span class="o">)</span> i5-4288U CPU @ 2.60GHz
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">R.Asaka</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-28T23:15:03+09:00" pubdate data-updated="true">2014/01/28</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/gao-su-hua/'>高速化</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.chacrue.com/posts/2014/optipng/" data-via="narvaux" data-counturl="http://blog.chacrue.com/posts/2014/optipng/">Tweet</a>
+                              <!-- Google+1 -->
+                              <!-- <div class="sns_gp"><div class="g-plusone" data-size="medium" data-count="true" href="http://wired.jp/2014/01/18/the-great-coder-vol10/">&nbsp;</div></div> -->
+                              <!-- Hatena -->
+                                <!-- <div class="sns_hb"><a href="http://b.hatena.ne.jp/entry/http://wired.jp/2014/01/18/the-great-coder-vol10/" class="hatena-bookmark-button" data-hatena-bookmark-title="高校3年でグーグルをソデにしたルーマニアの怪童イオヌッツ。  世界が欲しがる頭の中。" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a></div> -->
+                            
+  
+  
+    <div class="g-plusone" data-size="midium" data-count="true" href="http://blog.chacrue.com/posts/2014/optipng/"> </div>
+  
+  
+    <div class="fb-like" data-href="http://blog.chacrue.com/posts/2014/optipng/" data-send="false" data-width="75" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+  
+  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="http://b.hatena.ne.jp/entry/http://blog.chacrue.com/posts/2014/optipng/" class="hatena-bookmark-button"
+          data-hatena-bookmark-title="OptiPNGでPNG形式の画像をロスレス圧縮・軽量化する"
+          data-hatena-bookmark-layout="simple-balloon"
+          title="このエントリーをはてなブックマークに追加">
+        <img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+              alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" />
+    </a>
+    <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js"
+          charset="utf-8" async="async">
+    </script>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/2014/octopress-image-size/" title="Previous Post: Octopressで画像のwidth,height属性を指定する">&laquo; Octopressで画像のwidth,height属性を指定する</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/posts/2014/optipng/">OptiPNGでPNG形式の画像をロスレス圧縮・軽量化する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/2014/octopress-image-size/">Octopressで画像のwidth,height属性を指定する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/2014/site-language-change/">Octopressの言語指定を日本語にする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/2014/octopress-japanese-post/">Octopressで日本語の記事が書けない</a>
+      </li>
+    
+      <li class="post">
+        <a href="/posts/2014/slow-response-vagrant/">Vagrant packageで複製したboxのSSHレスポンスが遅い</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/centos/'>CentOS (1)</a></li><li><a href='/categories/html/'>HTML (1)</a></li><li><a href='/categories/mac/'>Mac (1)</a></li><li><a href='/categories/octopress/'>Octopress (3)</a></li><li><a href='/categories/vagrant/'>Vagrant (2)</a></li><li><a href='/categories/virtualbox/'>Virtualbox (1)</a></li><li><a href='/categories/gao-su-hua/'>高速化 (1)</a></li></ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/categories/centos' style='font-size: 120.0%'>CentOS(1)</a> <a href='/categories/html' style='font-size: 120.0%'>HTML(1)</a> <a href='/categories/mac' style='font-size: 120.0%'>Mac(1)</a> <a href='/categories/octopress' style='font-size: 160.0%'>Octopress(3)</a> <a href='/categories/vagrant' style='font-size: 140.0%'>Vagrant(2)</a> <a href='/categories/virtualbox' style='font-size: 120.0%'>Virtualbox(1)</a> <a href='/categories/gao-su-hua' style='font-size: 120.0%'>高速化(1)</a> </span>
+</section>
+<section>
+  <h1>Latest Tweets</h1>
+  <a class="twitter-timeline" href="https://twitter.com/narvaux" data-widget-id="424378576880676865">@narvaux からのツイート</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- a -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-9288202737091719"
+     data-ad-slot="8029312781"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - R.Asaka -
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
